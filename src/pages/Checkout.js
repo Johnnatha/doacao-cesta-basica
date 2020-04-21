@@ -1,11 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import DoacaoForm from './DoacaoForm';
 import PaymentForm from './PaymentForm';
@@ -211,13 +209,11 @@ export default function Checkout() {
       <main className={activeStep !== 2 ? classes.layout : classes.bgSuccess}>
         <Paper className={activeStep !== 2 ? classes.paper : classes.customPaper}>
           <React.Fragment>
-          <React.Fragment>
                   {getStepContent({
                     step: activeStep, 
                     cidades: cidadeList
                   })}
                 </React.Fragment>
-          </React.Fragment>
         </Paper>
       </main>
 
@@ -282,6 +278,15 @@ export default function Checkout() {
             justify="center"
             alignItems="flex-start"
           >
+
+            <Button
+                variant="outlined"
+                color="primary"
+                onClick={handleBack}
+                className={classes.button}
+            >
+              Cancelar
+            </Button>
 
             <Button
               variant="contained"
