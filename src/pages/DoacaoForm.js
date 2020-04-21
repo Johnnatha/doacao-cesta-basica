@@ -61,7 +61,6 @@ export default function DoacaoForm({ data, sessionId, donationValue, selectedCit
             id="vlrDoacao"
             name="vlrDoacao"
             minimumValue="0"
-            type="tel"
           />
         </Grid>
 

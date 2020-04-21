@@ -37,13 +37,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Review({ donationValue, selectedCity, setEmail, setAllowUseName }) {
+export default function Review({ donationValue, selectedCity, setEmail, setAllowUseName, settings }) {
   const classes = useStyles();
   const [ allowUseName, setAllowUseNameLocal ] = React.useState(false)
   const [ email, setEmailLocal ] = React.useState('')
 
   const handleChange = () => {
     setAllowUseNameLocal(!allowUseName)
+    setAllowUseName(!allowUseName)
   }
 
   const formatMoney = (int) => {
@@ -83,6 +84,7 @@ export default function Review({ donationValue, selectedCity, setEmail, setAllow
             onChange={(event, value) => { setEmailLocal(value); if (setEmail) { setEmail(value) } }}
             fullWidth
             type="email"
+            required={settings && settings.requiredEmailAutorizacao}
           />
         </div>
 

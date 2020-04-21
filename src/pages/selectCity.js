@@ -115,7 +115,7 @@ export default function DialogSelectCity({ sessionId, clientId, setSelectedCity,
 let listCity = null
 
 function CidadeList ({ handleClose, sessionId, clientId }) {
-  const shouldFetchUrl = listCity ? null : `${config.apiUrl}/v1/listCidades?s=${sessionId}&clientId=${clientId}`
+  const shouldFetchUrl = listCity ? null : `${config.apiUrl}/listCidades?s=${sessionId}&clientId=${clientId}`
   const { data } = useSWR(shouldFetchUrl, config.fetcher, { suspense: true })
 
   if (!listCity) {

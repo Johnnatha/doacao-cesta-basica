@@ -21,6 +21,7 @@ import useSWR from 'swr';
 import HomePage from './HomePage';
 import { Snackbar } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
+import CheckoutService from '../services/CheckoutService';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -168,7 +169,19 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function getStepContent({step, handleNext, sessionId, data, setDonationValue, setSelectedCity, donationValue, selectedCity, handleGetResult}) {
+function getStepContent({
+  step,
+  handleNext,
+  sessionId,
+  data,
+  setDonationValue,
+  setSelectedCity,
+  donationValue,
+  selectedCity,
+  settings,
+  setEmail,
+  setAllowUseName
+}) {
   switch (step) {
     case 0: {
       return <HomePage next={handleNext} data={data} sessionId={sessionId} />;
@@ -181,6 +194,7 @@ function getStepContent({step, handleNext, sessionId, data, setDonationValue, se
                 setSelectedCity={setSelectedCity}
                 donationValue={donationValue}
                 selectedCity={selectedCity}
+                settings={settings}
               />;
     }
     case 2:
@@ -190,6 +204,9 @@ function getStepContent({step, handleNext, sessionId, data, setDonationValue, se
                 sessionId={sessionId}
                 donationValue={donationValue}
                 selectedCity={selectedCity}
+                setEmail={setEmail}
+                setAllowUseName={setAllowUseName}
+                settings={settings}
               />;
       }
     case 3:
@@ -207,13 +224,18 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function CheckoutSteps() {
+  // COMPONENT FIELDS
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
   const [open, setOpen] = React.useState(false)
   const [message, setMessage] = React.useState('')
   const [messageSeverity, setMessageSeverity] = React.useState('')
+
+  // DATA FIELDS
   const [donationValue, setDonationValue] = React.useState(null)
   const [selectedCity, setSelectedCity] = React.useState(null)
+  const [allowUseName, setAllowUseName] = React.useState(false)
+  const [email, setEmail] = React.useState('')
 
   let sessionId = null;
   let sourceId = null;
@@ -226,9 +248,39 @@ export default function CheckoutSteps() {
     sourceId = urlParams.get('src');
   }
 
-  const { data } = useSWR(sessionId ? `${config.apiUrl}/v1/initWebApp?s=${sessionId}&clientId=${clientId}` : null, config.fetcher, { suspense: true })
+  const { data } = useSWR(sessionId ? `${config.apiUrl}/initWebApp?s=${sessionId}&clientId=${clientId}` : null, config.fetcher, { suspense: true })
+
+  const handleCheckout = async (callback) => {
+    const requestData = {
+      dadosPagamento: {
+          valorPagamento: donationValue
+      },
+      dadosAutorizacao: {
+          aceitaDivulgarNome: allowUseName,
+          email: email
+      },
+      dadosDoacao: {
+        cidadeDestino: {
+          id: selectedCity.id
+        }
+      }
+    }
+
+    if (data && data.defaultCard) {
+      requestData.dadosPagamento = Object.assign(requestData.dadosPagamento, { ...data.defaultCard })
+    }
+
+    const response = await CheckoutService.finish(sessionId, clientId, requestData)
+    console.log(response)
+
+    if (response.success && callback) {
+      callback()
+    }
+  }
 
   const handleNext = () => {
+    const next = () => setActiveStep(activeStep + 1);
+
     if (activeStep === 1 && donationValue === null) {
       setMessageSeverity('error')
       setMessage('Você deve preencher o valor da doação primeiro!')
@@ -241,7 +293,11 @@ export default function CheckoutSteps() {
       return
     }
 
-    setActiveStep(activeStep + 1);
+    if (activeStep === 2) {
+      return handleCheckout(next)
+    }
+
+    next();
   };
 
   const handleBack = () => {
@@ -308,10 +364,8 @@ export default function CheckoutSteps() {
         </AppBar>
 
         <div className={classes.payDialog_content}>
-          <PaymentForm />
-
+          <PaymentForm settings={data.settings} />
         </div>
-
       </Dialog>
 
       <main className={activeStep !== 3 ? classes.layout : classes.bgSuccess}>
@@ -325,7 +379,10 @@ export default function CheckoutSteps() {
               setDonationValue,
               setSelectedCity,
               donationValue,
-              selectedCity
+              selectedCity,
+              settings: data.settings,
+              setAllowUseName,
+              setEmail
             })}
           </React.Fragment>
         </Paper>
