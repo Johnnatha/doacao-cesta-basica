@@ -1,20 +1,19 @@
-import React from 'react'
-
-import { makeStyles } from '@material-ui/core/styles'
-
-import {
-  Container,
-  Typography,
-  Button,
-  TextField,
-  Grid
-} from '@material-ui/core'
-
-import Checkout from './Checkout'
+import React, { Suspense } from 'react'
+import { SWRConfig } from 'swr'
+import CheckoutSteps from './CheckoutSteps'
+import SuspenseLoader from '../components/SuspenseLoader'
 
 export default function Index() {
 
   return (
-    <Checkout />
+    <SWRConfig 
+      value={{
+        refreshInterval: 0
+      }}
+    >
+      <Suspense fallback={<SuspenseLoader />}>
+        <CheckoutSteps />
+      </Suspense>
+    </SWRConfig>
   )
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import CurrencyTextField from '@unicef/material-ui-currency-textfield'
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -14,46 +15,65 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 400,
     },
 
+    typographyEnd: {
+      marginTop: theme.spacing(8),
+      color: '#9B9A9B',
+      fontWeight: 400,
+    },
+
     textField: {
         fontSize: '1.5em',
-        textAlign: 'center'
+        textAlign: 'center',
+        marginTop: 22,
+
+        '& input': {
+          textAlign: 'center',
+          paddingRight: 15
+        }
     }
   }));
 
-export default function DoacaoForm(props) {
-    const classes = useStyles();
-    const cidades = props.cidades;
-
-    const handleSelectCity = () => {
-      console.log('foi...');
-    };
+export default function DoacaoForm({ data, sessionId, donationValue, selectedCity, setDonationValue, setSelectedCity }) {
+  const classes = useStyles()
+  const [value, setValue] = React.useState(donationValue || null)
 
   return (
     <React.Fragment>
       <Typography variant="h6" className={classes.typography}>
-      Qual o valor de sua <strong>doação</strong>?
+      Qual o valor de<br />
+      sua <strong>doação</strong>?
       </Typography>
 
-      <Grid item xs={12} sm={6}>
-          <TextField
+      <Grid container>
+        <Grid item xs={12} sm={6}>
+          <CurrencyTextField
             className={classes.textField}
-            required
+            variant="standard"
+            value={value}
+            decimalCharacter=","
+            digitGroupSeparator="."
+            decimalPlaces={2}
+            decimalPlacesShownOnFocus={2}
+            currencySymbol="R$"
+            onChange={(event, value)=> { setValue(value); setDonationValue(value) }}
+            fullWidth
+            autoComplete='off'
             id="vlrDoacao"
             name="vlrDoacao"
-            fullWidth
-            type="number"
-            autoComplete='off'
+            minimumValue="0"
+            type="tel"
           />
         </Grid>
 
-        <Typography variant="h6"className={classes.typography} >
-             Escolha a <strong>cidade</strong> para onde quer destinar
+        <Typography variant="h6"className={classes.typographyEnd} >
+            Escolha a <strong>cidade</strong> para onde<br />
+            quer destinar
         </Typography>
 
-      <Grid item xs={12} sm={6}>
-         <DialogSelectCity cidades={cidades} />
-        </Grid>        
-
+        <Grid item xs={12} sm={6}>
+          <DialogSelectCity sessionId={sessionId} clientId={data.clientId} setSelectedCity={setSelectedCity} selectedCity={selectedCity} />
+        </Grid>  
+      </Grid>      
     </React.Fragment>
   );
 }

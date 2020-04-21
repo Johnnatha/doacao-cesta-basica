@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
   },
   title: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(5),
     marginBottom: theme.spacing(2),
     color: '#fff'
   },
@@ -28,12 +28,22 @@ const useStyles = makeStyles((theme) => ({
   button: {
     backgroundColor: '#fff',
     borderRadius: 50,
-    color: '#037649'
+    color: '#037649',
+    width: 120,
+    height: 50,
+    marginTop: 30,
+    fontSize: 18,
   }
 }));
 
 export default function Confirm() {
   const classes = useStyles();
+
+  const handleFinish = () => {
+    if (window && window !== 'undefined') {
+      window.parent.postMessage(JSON.stringify({ action: 'close'}), '*'); 
+    }
+  }
 
   return (
     <React.Fragment >
@@ -68,6 +78,7 @@ export default function Confirm() {
                 variant="outlined"
                 color="primary"
                 className={classes.button}
+                onClick={handleFinish}
               >
                 Ok!
             </Button>

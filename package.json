@@ -5,13 +5,17 @@
   "dependencies": {
     "@material-ui/core": "latest",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.50",
     "@material-ui/styles": "latest",
+    "@unicef/material-ui-currency-textfield": "^0.8.6",
     "gatsby": "latest",
     "gatsby-plugin-material-ui": "latest",
     "gatsby-plugin-react-helmet": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-helmet": "latest"
+    "react-helmet": "latest",
+    "swr": "^0.2.0",
+    "unfetch": "^4.1.0"
   },
   "scripts": {
     "develop": "gatsby develop",
