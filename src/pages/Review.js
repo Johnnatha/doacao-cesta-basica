@@ -1,26 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
 import Doacao from '../images/doacao.png';
-
-const products = [
-  { name: 'Product 1', desc: 'A nice thing', price: '$9.99' },
-  { name: 'Product 2', desc: 'Another thing', price: '$3.45' },
-  { name: 'Product 3', desc: 'Something else', price: '$6.51' },
-  { name: 'Product 4', desc: 'Best thing of all', price: '$14.11' },
-  { name: 'Shipping', desc: '', price: 'Free' },
-];
-const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-];
+import { TextField, Checkbox, FormControlLabel } from '@material-ui/core';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -43,35 +28,79 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     fontSize: '1.2em'
   },
+  imgWrapper: {
+    marginTop: theme.spacing(3)
+  },
+  spacerTop: {
+    marginTop: 25,
+    width: '100%'
+  }
 }));
 
-export default function Review() {
+export default function Review({ donationValue, selectedCity, setEmail, setAllowUseName }) {
   const classes = useStyles();
+  const [ allowUseName, setAllowUseNameLocal ] = React.useState(false)
+  const [ email, setEmailLocal ] = React.useState('')
+
+  const handleChange = () => {
+    setAllowUseNameLocal(!allowUseName)
+  }
+
+  const formatMoney = (int) => {
+    const numero = int.toFixed(2).split('.');
+    numero[0] = numero[0].split(/(?=(?:...)*$)/).join('.');
+    return numero.join(',');
+  }
 
   return (
     <React.Fragment>
-
       <Grid
         container
         direction="row"
         justify="center"
-        alignItems="flex-center"
+        alignItems="center"
       >
-
-        <Typography variant="h6" className={classes.title}>
-          Confirme os dados de sua doação
-       </Typography>
 
         <Typography variant="h6" className={classes.typography}>
           Doação no valor de <br />
-          <strong>R$ 120,00</strong> de cextas básicas <br />
-          para cidade de <strong>Santo Cristo </strong>
+          <strong>R$ {formatMoney(donationValue)}</strong> de cestas<br />
+          básicas para cidade de<br />
+          <strong>{selectedCity && selectedCity.nome ? selectedCity.nome : ''} - {selectedCity && selectedCity.siglaUf ? selectedCity.siglaUf : ''} </strong>
         </Typography>
 
+        <div className={classes.imgWrapper}>
+          <img src={Doacao} />
+        </div>
 
-        <img src={Doacao} />
+        <Typography variant="h6" className={classes.typography}>
+            Informe seu e-mail e receba<br />
+            informações sobre a campanha
+        </Typography>
 
+        <div className={classes.spacerTop}>
+          <TextField
+            value={email}
+            onChange={(event, value) => { setEmailLocal(value); if (setEmail) { setEmail(value) } }}
+            fullWidth
+            type="email"
+          />
+        </div>
 
+        <div className={classes.spacerTop}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={allowUseName}
+                onChange={handleChange}
+                name="allowUseName"
+                color="primary"
+                icon={<CheckBoxOutlineBlankIcon style={{fontSize: 32}} />}
+                checkedIcon={<CheckBoxIcon style={{fontSize: 32}} />}
+              />
+            }
+            label="Autorizo a divulgação do meu nome como Doador"
+          />
+        </div>
       </Grid>
 
     </React.Fragment>

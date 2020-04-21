@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -12,6 +12,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
+import useSWR from 'swr'
+import config from '../config'
+import SuspenseLoader from '../components/SuspenseLoader';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -27,6 +30,17 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
     borderRadius: 50,
     backgroundColor: '#F7F7F7',
+    marginTop: 48,
+    height: 50
+  },
+  tapToChoose: {
+    textDecoration: 'underline'
+  },
+  citySelected: {
+    textTransform: 'capitalize',
+    fontSize: 20,
+    fontWeight: 400,
+    marginTop: -3
   }
 }));
 
@@ -34,16 +48,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function DialogSelectCity(props) {
+export default function DialogSelectCity({ sessionId, clientId, setSelectedCity, selectedCity }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [age, setAge] = React.useState('');
-  const cidades = props.cidades;
-  const cidadeSelecionada = props.cidadeSelecionada;
-
-  const handleChange = (event) => {
-    setAge(Number(event.target.value) || '');
-  };
+  const [citySelected, setCitySelected] = React.useState(selectedCity || null);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -51,22 +59,12 @@ export default function DialogSelectCity(props) {
 
   const handleClose = (cid) => {
     setOpen(false);
+
+    if (cid && cid.nome) {
+      setCitySelected(cid)
+      setSelectedCity(cid)
+    }
   };
-
-  const cidadesListItems = (cidades ? cidades : []).map((cid, index) =>
-    <React.Fragment>
-      <ListItem button>
-        <ListItemText
-          primary={cid.nome}
-          secondary={cid.uf}
-          onClick={() => handleClose(cid)} />
-      </ListItem>
-
-      {index < (cidades.length - 1) && (
-        <Divider />
-      )}
-    </React.Fragment>
-  );
 
   return (
     <div>
@@ -74,12 +72,17 @@ export default function DialogSelectCity(props) {
         onClick={handleClickOpen}
         className={classes.btnCustom}
         fullWidth >
-
-        {!cidadeSelecionada && (
-          'Escolha...'
+        
+        {!citySelected && (
+          <span className={classes.tapToChoose}>
+            Toque para escolher...
+          </span>
         )}
-        {cidadeSelecionada && (
-         'nome'
+
+        {citySelected && (
+          <span className={classes.citySelected}>
+            {citySelected.nome} - {citySelected.siglaUf}
+          </span>
         )}
       </Button>
 
@@ -101,11 +104,44 @@ export default function DialogSelectCity(props) {
           </Toolbar>
         </AppBar>
 
-        <List>
-          {cidadesListItems}
-        </List>
-
+        <Suspense fallback={<SuspenseLoader />}>
+          <CidadeList handleClose={handleClose} sessionId={sessionId} clientId={clientId} />
+        </Suspense>
       </Dialog>
     </div>
   );
+}
+
+let listCity = null
+
+function CidadeList ({ handleClose, sessionId, clientId }) {
+  const shouldFetchUrl = listCity ? null : `${config.apiUrl}/v1/listCidades?s=${sessionId}&clientId=${clientId}`
+  const { data } = useSWR(shouldFetchUrl, config.fetcher, { suspense: true })
+
+  if (!listCity) {
+    listCity = data.list
+  }
+
+  const list = listCity ? listCity : data.list
+
+  const cidadesListItems = (list ? list : []).map((cid, index) =>
+    <React.Fragment key={index}>
+      <ListItem button>
+        <ListItemText
+          primary={cid.nome}
+          secondary={cid.uf}
+          onClick={() => handleClose(cid)} />
+      </ListItem>
+
+      {index < (list.length - 1) && (
+        <Divider />
+      )}
+    </React.Fragment>
+  );
+
+  return (
+    <List>
+      {cidadesListItems}
+    </List>
+  )
 }
