@@ -56,13 +56,13 @@ export default function DonationFinish({ checkoutResponse }) {
         >
         <Grid item xs={12}  >
           <Typography variant="h6" className={classes.title}>
-            {checkoutResponse.message || 'Erro'}
+            {checkoutResponse && checkoutResponse.message ? checkoutResponse.message : 'Erro'}
           </Typography>
         </Grid>
 
         <Grid item xs={12} >
           {
-            checkoutResponse.success ?
+            checkoutResponse && checkoutResponse.success ?
               <img src={Check} className={classes.check} />
             :
               <img src={CheckError} className={classes.check} />
@@ -73,7 +73,7 @@ export default function DonationFinish({ checkoutResponse }) {
 
           <Typography variant="h6" className={classes.title}>
             {
-              checkoutResponse.success ?
+              checkoutResponse && checkoutResponse.success ?
                 'Obrigado!'
               :
                 'Que pena!'

@@ -264,6 +264,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function CheckoutSteps() {
+  const isSSR = typeof window === "undefined"
+
   // COMPONENT FIELDS
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
@@ -294,7 +296,7 @@ export default function CheckoutSteps() {
     sourceId = urlParams.get('src');
   }
 
-  const { data } = useSWR(sessionId ? `${config.apiUrl}/initWebApp?s=${sessionId}&clientId=${clientId}` : null, config.fetcher, { suspense: true })
+  const { data } = useSWR(sessionId ? `${config.apiUrl}/initWebApp?s=${sessionId}&clientId=${clientId}` : null, config.fetcher, { suspense: !isSSR })
 
   React.useEffect(() => {
     if (data && data.defaultCard) {
@@ -447,7 +449,7 @@ export default function CheckoutSteps() {
 
         <div className={classes.payDialog_content}>
           <PaymentForm
-            settings={data.settings}
+            settings={data && data.settings ? data.settings : {}}
             onClose={handleNewCardClose}
             setCpfCnpj={setCpfCnpj}
             setCardNumber={setCardNumber}
@@ -475,7 +477,7 @@ export default function CheckoutSteps() {
                   setSelectedCity,
                   donationValue,
                   selectedCity,
-                  settings: data.settings,
+                  settings: data && data.settings ? data.settings : {},
                   setAllowUseName,
                   setEmail,
                   checkoutResponse

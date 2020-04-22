@@ -67,7 +67,7 @@ export default function DoacaoForm({ data, sessionId, donationValue, selectedCit
         </Typography>
 
         <Grid item xs={12}>
-          <DialogSelectCity sessionId={sessionId} clientId={data.clientId} setSelectedCity={setSelectedCity} selectedCity={selectedCity} />
+          <DialogSelectCity sessionId={sessionId} clientId={data && data.clientId ? data.clientId : null} setSelectedCity={setSelectedCity} selectedCity={selectedCity} />
         </Grid>  
       </Grid>      
     </React.Fragment>

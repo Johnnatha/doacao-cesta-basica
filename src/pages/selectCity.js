@@ -65,6 +65,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function DialogSelectCity({ sessionId, clientId, setSelectedCity, selectedCity }) {
+  const isSSR = typeof window === "undefined"
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [citySelected, setCitySelected] = React.useState(selectedCity || null);
@@ -125,9 +127,13 @@ export default function DialogSelectCity({ sessionId, clientId, setSelectedCity,
           </Toolbar>
         </AppBar>
 
-        <Suspense fallback={<SuspenseLoader />}>
-          <CidadeList handleClose={handleClose} sessionId={sessionId} clientId={clientId} />
-        </Suspense>
+        {
+          !isSSR && (
+          <Suspense fallback={<SuspenseLoader />}>
+            <CidadeList handleClose={handleClose} sessionId={sessionId} clientId={clientId} isSSR={isSSR} />
+          </Suspense>
+          )
+        }
       </Dialog>
     </div>
   );
@@ -135,10 +141,10 @@ export default function DialogSelectCity({ sessionId, clientId, setSelectedCity,
 
 let listCity = null
 
-function CidadeList ({ handleClose, sessionId, clientId }) {
+function CidadeList ({ handleClose, sessionId, clientId, isSSR }) {
   const classes = useStyles()
   const shouldFetchUrl = listCity ? null : `${config.apiUrl}/listCidades?s=${sessionId}&clientId=${clientId}`
-  const { data } = useSWR(shouldFetchUrl, config.fetcher, { suspense: true })
+  const { data } = useSWR(shouldFetchUrl, config.fetcher, { suspense: !isSSR })
 
   if (!listCity) {
     listCity = data.list

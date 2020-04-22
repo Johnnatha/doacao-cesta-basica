@@ -59,6 +59,12 @@ const BorderLinearProgress = withStyles({
 export default function HomePage({ data, next }) {
   const classes = useStyles()
 
+  let campanha = {};
+
+  if (data && data.campanha) {
+    campanha = data.campanha
+  }
+
   return (
     <React.Fragment>
       <Grid container spacing={3}>
@@ -68,21 +74,21 @@ export default function HomePage({ data, next }) {
           </div>
 
           <span className={classes.labelFinal} style={{textAlign: 'center'}}>
-            Doado <strong>R$ {Util.formatMoney(data.campanha.vlrDoado)}</strong>
+            Doado <strong>R$ {Util.formatMoney(campanha.vlrDoado)}</strong>
           </span>
 
           <BorderLinearProgress
             variant="determinate"
             color="secondary"
-            value={data.campanha.percAtingimento}
+            value={campanha.percAtingimento}
           />
 
           <span className={classes.labelFinal} style={{textAlign: 'center'}}>
-            Desafio <strong>R$ {Util.formatMoney(data.campanha.vlrDesafio)}</strong>
+            Desafio <strong>R$ {Util.formatMoney(campanha.vlrDesafio)}</strong>
           </span>
 
           <span className={classes.labelFinalAccent}>
-            Faltam <strong>{data.campanha.diasEncerramento} dias!</strong>
+            Faltam <strong>{campanha.diasEncerramento} dias!</strong>
           </span>
 
           <Button

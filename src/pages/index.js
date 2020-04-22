@@ -4,15 +4,21 @@ import CheckoutSteps from './CheckoutSteps'
 import SuspenseLoader from '../components/SuspenseLoader'
 
 export default function Index() {
+  const isSSR = typeof window === "undefined"
+
   return (
     <SWRConfig 
       value={{
         refreshInterval: 0
       }}
     >
-      <Suspense fallback={<SuspenseLoader />}>
-        <CheckoutSteps />
-      </Suspense>
+      {
+        !isSSR && (
+          <Suspense fallback={<SuspenseLoader />}>
+            <CheckoutSteps />
+          </Suspense>
+        )
+      }
     </SWRConfig>
   )
 }
