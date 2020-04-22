@@ -2,7 +2,7 @@ import config from '../config'
 
 export default {
   finish: (sessionId, clientId, data) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       fetch(`${config.apiUrl}/checkout?s=${sessionId}&clientId=${clientId}`, {
         method: 'POST',
         body: JSON.stringify(data),
@@ -16,7 +16,7 @@ export default {
       })
       .catch((response) => {
         response.json().then((data) => {
-          reject(data)
+          resolve(data)
         });
       })
     })

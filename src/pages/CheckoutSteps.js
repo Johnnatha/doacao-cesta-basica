@@ -251,7 +251,7 @@ function getStepContent({
       }
     case 3:
       {
-        return <DonationFinish data={data} sessionId={sessionId} checkoutResponse />;
+        return <DonationFinish data={data} sessionId={sessionId} checkoutResponse={checkoutResponse} />;
       }
 
     default:
@@ -287,7 +287,7 @@ export default function CheckoutSteps() {
   let sourceId = null;
   let clientId = null;
 
-  if (window && window.location) {
+  if (typeof window !== 'undefined' && window.location) {
     const urlParams = new URLSearchParams(window.location.search);
     sessionId = urlParams.get('s');
     clientId = urlParams.get('clientId');
@@ -340,7 +340,7 @@ export default function CheckoutSteps() {
 
     const response = await CheckoutService.finish(sessionId, clientId, requestData)
 
-    if (response.success && callback) {
+    if (callback) {
       callback()
       setCheckoutResponse(response)
     }

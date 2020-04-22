@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginTop: theme.spacing(5),
     marginBottom: theme.spacing(2),
-    color: '#fff'
+    color: theme.palette.primary.main
   },
   check: {
     width: 150
@@ -40,7 +40,7 @@ export default function DonationFinish({ checkoutResponse }) {
   const classes = useStyles();
 
   const handleFinish = () => {
-    if (window && window !== 'undefined') {
+    if (typeof window !== 'undefined' && window.parent) {
       window.parent.postMessage(JSON.stringify({ action: 'close'}), '*'); 
     }
   }
