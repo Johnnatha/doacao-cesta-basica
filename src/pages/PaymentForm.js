@@ -66,6 +66,17 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
   }, [])
 
   const handleFocus = (name) => {
+    if (name === 'cnpj') {
+      setTimeout(() => {
+        const field = document.getElementById('cnpj')
+
+        if (field.value.length === 18) {
+          const focusField = document.getElementById('cardNumber')
+          focusField.focus()
+        }  
+      }, 1);
+    }
+
     if (name === 'cardNumber') {
       setTimeout(() => {
         const field = document.getElementById('cardNumber')
@@ -112,16 +123,16 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
     <Container maxWidth="md">
       <Grid container spacing={3}>
         {
-          settings && settings.requiredCpf &&
+          settings && !settings.requiredCpf &&
           <Grid item xs={12} md={6}>
             {
               cpfCnpj.length <= 14 &&
-              <InputMask mask="999.999.999-999" maskChar="" value={cpfCnpj} onChange={event => { setCpfCnpjLocal(event.target.value); setCpfCnpj(event.target.value); handleFocus('cpfCnpj', event.target.value) }}>
+              <InputMask mask="999.999.999-999" maskChar="" value={cpfCnpj} onChange={event => { setCpfCnpjLocal(event.target.value); setCpfCnpj(event.target.value); handleFocus('cpf', event.target.value) }}>
                 {inputProps =>
                   <TextField
                     {...inputProps}
                     required
-                    id="userCpf"
+                    id="cpf"
                     label="CPF ou CNPJ"
                     type="tel"
                     fullWidth
@@ -134,12 +145,12 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
             
             {
               cpfCnpj.length > 14 &&
-              <InputMask mask="99.999.999/9999-99" maskChar="" value={cpfCnpj} onChange={event => { setCpfCnpjLocal(event.target.value); setCpfCnpj(event.target.value); handleFocus('cpfCnpj', event.target.value) }}>
+              <InputMask mask="99.999.999/9999-99" maskChar="" value={cpfCnpj} onChange={event => { setCpfCnpjLocal(event.target.value); setCpfCnpj(event.target.value); handleFocus('cnpj', event.target.value) }}>
                 {inputProps =>
                   <TextField
                     {...inputProps}
                     required
-                    id="userCpf"
+                    id="cnpj"
                     label="CPF ou CNPJ"
                     type="tel"
                     fullWidth
