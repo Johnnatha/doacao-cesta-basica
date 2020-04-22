@@ -60,20 +60,12 @@ export default function Review({donationValue, selectedCity, setEmail, setAllowU
     const classes = useStyles();
     const [allowUseName, setAllowUseNameLocal] = React.useState(false)
     const [email, setEmailLocal] = React.useState('')
-    const [emailFocus, setEmailFocus] = React.useState(false)
 
     const handleChange = () => {
         setAllowUseNameLocal(!allowUseName)
         setAllowUseName(!allowUseName)
     }
 
-    const handleEmailFocus = () => {
-        setEmailFocus(true)
-    }
-
-    const handleEmailBlur = () => {
-        setEmailFocus(false)
-    }
 
     return (
         <React.Fragment>
@@ -112,8 +104,6 @@ export default function Review({donationValue, selectedCity, setEmail, setAllowU
                                 setEmail(event.target.value)
                             }
                         }}
-                        onFocus={handleEmailFocus}
-                        onBlur={handleEmailBlur}
                         fullWidth
                         type="email"
                         placeholder="E-mail"
