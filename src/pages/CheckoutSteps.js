@@ -20,7 +20,7 @@ import HomePage from './HomePage';
 import { Snackbar, Container, CircularProgress } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import CheckoutService from '../services/CheckoutService';
-import BannerDesktop from '../images/banner_desk_840x745_view.png'
+import BannerDesktop from '../components/Image/banner-home-desktop'
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -161,11 +161,20 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 16
   },
   image: {
-    left: 0,
-    position: 'absolute',
-    maxWidth: '58%',
+    position: 'absolute !important',
     top: 0,
-    height: '100%'
+    left: 0,
+    maxWidth: '58% !important',
+    height: '100% !important',
+    width: '100%',
+
+    '& .gatsby-image-wrapper': {
+      height: '100% !important',
+
+      '& img': {
+        objectFit: 'unset !important'
+      }
+    },
   },
   modalRoot: {
     marginLeft: '58%'
@@ -181,7 +190,8 @@ const useStyles = makeStyles((theme) => ({
       display: 'none'
     },
     appBarBottom: {
-      position: 'fixed'
+      position: 'fixed',
+      background: 'transparent',
     },
     appBarStepConfirm: {
       position: 'fixed',
@@ -483,7 +493,9 @@ export default function CheckoutSteps() {
           <Container maxWidth={false}>
             <Grid container spacing={6} className={classes.screen}>
               <Grid item xs={12} md={7} className={classes.imageWrapper}>
-                <img src={BannerDesktop} className={classes.image} />
+                <div className={classes.image}>
+                  <BannerDesktop />
+                </div>
               </Grid>
 
               <Grid item xs={12} md={5}>

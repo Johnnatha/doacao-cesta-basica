@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Grid, makeStyles, lighten, LinearProgress, Typography } from '@material-ui/core'
 import Util from '../services/Util'
 import { withStyles } from '@material-ui/styles';
-import BannerMobile from '../images/banner_app_320x380_view.png'
+import BannerMobile from '../components/Image/banner-home-mobile'
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -34,14 +34,29 @@ const useStyles = makeStyles((theme) => ({
       justifyContent: 'center',
       marginTop: -24,
       marginBottom: 24,
+      height: 360,
 
       '& img': {
         maxWidth: '100%'
-      }
+      },
+
+      '& .gatsby-image-wrapper': {
+        height: '100% !important',
+        width: '100%',
+  
+        '& img': {
+          objectFit: 'unset !important'
+        }
+      },
     },
     containerDonate: {
       padding: '22px 0 !important'
-    }
+    },
+    imageMobile: {
+      maxWidth: '58% !important',
+      height: '100% !important',
+      width: '100%',
+    },
   }
 }))
 
@@ -70,7 +85,7 @@ export default function HomePage({ data, next }) {
       <Grid container spacing={3}>
         <Grid item xs={12} md={12} className={classes.containerDonate}>
           <div className={classes.bannerMobile}>
-            <img src={BannerMobile} alt="" /> 
+            <BannerMobile className={classes.imageMobile} />
           </div>
 
           <span className={classes.labelFinal} style={{textAlign: 'center'}}>
