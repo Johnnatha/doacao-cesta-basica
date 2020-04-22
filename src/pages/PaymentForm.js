@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 140,
     ...theme.btnAccent,
     color: theme.palette.primary.main,
-    backgroundColor: '#dedede',
+    backgroundColor: 'transparent',
     marginRight: 14
   },
   '@media only screen and (min-width: 992px)': {

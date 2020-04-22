@@ -27,204 +27,229 @@ function Alert(props) {
 }
 
 const useStyles = makeStyles((theme) => ({
-    appBar: {
-        position: 'relative',
-        backgroundColor: theme.palette.accentColor,
-        color: '#fff',
-        display: 'none'
-    },
-    layout: {
-        width: 'auto'
-    },
-    customPaper: {
-        boxShadow: 'none',
-    },
-    paper: {
-        marginBottom: theme.spacing(3),
-        padding: theme.spacing(2),
-        boxShadow: 'none',
-    },
-    stepper: {
-        padding: theme.spacing(3, 0, 5),
-    },
-    buttons: {
-        display: 'flex',
-        justifyContent: 'flex-end',
-        padding: 10
-    },
-    payMethod: {
-        display: 'flex',
-        justifyContent: 'flex-start',
-    },
-    typography: {
-        marginTop: theme.spacing(3),
-    },
-    button: {
-        marginLeft: theme.spacing(1),
-        borderRadius: 50,
-        paddingLeft: 25,
-        paddingRight: 25,
-        fontSize: '1.2em',
-        height: 44,
-        lineHeight: '20px',
-        minWidth: 145
-    },
-    activeStepBarWrapper: {
-        position: 'relative',
-        marginTop: 75
-    },
-    appBarBottom: {
-        top: 'auto',
-        bottom: 0,
-        paddingBottom: 8,
-        paddingTop: 4,
-        position: 'absolute'
-    },
-    appBarStepConfirm: {
-        top: 'auto',
-        bottom: 0,
-        padding: 10,
-        backgroundColor: '#fff',
-        boxShadow: 'none',
-        height: 66,
-        display: 'flex',
-        justifyContent: 'space-between',
-        position: 'absolute'
-    },
-    payCardIcon: {
-        width: 50,
-        maxHeight: 32,
-        minHeight: 32,
-    },
-    payBox: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginLeft: '-8px',
-    },
-    payMathod: {
-        display: 'flex',
-        alignItems: 'center',
-        position: 'relative',
-
-        '&:after': {
-            content: '""',
-            width: 0,
-            height: 0,
-            borderLeft: '8px solid transparent',
-            borderRight: '8px solid transparent',
-            borderTop: '8px solid #797979',
-            position: 'absolute',
-            right: 0
-        }
-    },
-    payButtonWrapper: {
-        display: 'flex',
-        alignItems: 'flex-end',
-        justifyContent: 'flex-end',
-        height: 52,
-    },
-    smalLabel: {
-        fontSize: 14,
-        marginBottom: 4,
-        display: 'block'
-    },
-
-    payDialog_appBar: {
-        position: 'relative',
-        backgroundColor: theme.palette.accentColor,
-        color: '#fff'
-    },
-    payDialog_title: {
-        marginLeft: theme.spacing(2),
-        flex: 1,
-    },
-    payDialog_btnCustom: {
-        marginLeft: theme.spacing(2),
-        flex: 1,
-    },
-    payDialog_content: {
-        padding: 20
-    },
-    bgSuccess: {
-        textAlign: 'center',
-        height: '100vh'
-    },
-    btnBack: {
-        width: 36,
-        minWidth: 36,
-        color: '#fff',
-        borderRadius: '50%',
-        marginLeft: -10
-    },
-    appBarTitle: {
-        fontSize: 16
-    },
-    image: {
-        position: 'absolute !important',
-        top: 0,
-        left: 0,
-        maxWidth: '58% !important',
-        height: '100% !important',
-        width: '100%',
-
-        '& .gatsby-image-wrapper': {
-            height: '100% !important',
-
-            '& img': {
-                objectFit: 'unset !important'
-            }
-        },
-    },
-    modalRoot: {
-        marginLeft: '58%'
-    },
-    buttonProgress: {
-        color: '#fff'
-    },
-    '@media only screen and (max-width: 992px)': {
         appBar: {
-            display: 'block'
-        },
-        image: {
-            display: 'none'
-        },
-        appBarBottom: {
-            position: 'fixed',
-            background: 'transparent',
-        },
-        appBarStepConfirm: {
-            position: 'fixed',
-            backgroundColor: theme.mobileBackground,
-        },
-        imageWrapper: {
+            position: 'relative',
+            backgroundColor: theme.palette.accentColor,
+            color: '#fff',
             display: 'none'
         },
         layout: {
-            '& > div': {
-                backgroundColor: theme.mobileBackground,
+            width: 'auto'
+        },
+        customPaper: {
+            boxShadow: 'none',
+        },
+        paper: {
+            marginBottom: theme.spacing(3),
+            padding: theme.spacing(2),
+            boxShadow: 'none',
+        },
+        stepper: {
+            padding: theme.spacing(3, 0, 5),
+        },
+        buttons: {
+            display: 'flex',
+            justifyContent: 'flex-end',
+            padding: 10
+        },
+        payMethod: {
+            display: 'flex',
+            justifyContent: 'flex-start',
+        },
+        typography: {
+            marginTop: theme.spacing(3),
+        },
+        button: {
+            marginLeft: theme.spacing(1),
+            borderRadius: 50,
+            paddingLeft: 25,
+            paddingRight: 25,
+            fontSize: '1.2em',
+            height: 44,
+            lineHeight: '20px',
+            minWidth: 145
+        },
+        activeStepBarWrapper: {
+            position: 'relative',
+            marginTop: 75
+        },
+        appBarBottom: {
+            top: 'auto',
+            bottom: 0,
+            paddingBottom: 8,
+            paddingTop: 4,
+            position: 'absolute'
+        },
+        appBarBottomPay: {
+            top: 'auto',
+            bottom: 0,
+            paddingBottom: 8,
+            paddingTop: 4,
+            position: 'absolute'
+        },
+        appBarStepConfirm: {
+            top: 'auto',
+            bottom: 0,
+            padding: 10,
+            backgroundColor: '#fff',
+            boxShadow: 'none',
+            height: 66,
+            display: 'flex',
+            justifyContent: 'space-between',
+            position: 'absolute'
+        },
+        payCardIcon: {
+            width: 50,
+            maxHeight: 32,
+            minHeight: 32,
+        },
+        payBox: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginLeft: '-8px',
+        },
+        payMathod: {
+            display: 'flex',
+            alignItems: 'center',
+            position: 'relative',
+
+            '&:after': {
+                content: '""',
+                width: 0,
+                height: 0,
+                borderLeft: '8px solid transparent',
+                borderRight: '8px solid transparent',
+                borderTop: '8px solid #797979',
+                position: 'absolute',
+                right: 0
             }
         },
-        modalRoot: {
-            marginLeft: 0,
+        payButtonWrapper: {
+            display: 'flex',
+            alignItems: 'flex-end',
+            justifyContent: 'flex-end',
+            height: 52,
+        },
+        smalLabel: {
+            fontSize: 14,
+            marginBottom: 4,
+            display: 'block'
+        },
 
-            '& div[role="dialog"]': {
-                backgroundColor: theme.mobileBackground
-            }
+        payDialog_appBar: {
+            position: 'relative',
+            backgroundColor: theme.palette.accentColor,
+            color: '#fff'
+        },
+        payDialog_title: {
+            marginLeft: theme.spacing(2),
+            flex: 1,
+        },
+        payDialog_btnCustom: {
+            marginLeft: theme.spacing(2),
+            flex: 1,
+        },
+        payDialog_content: {
+            padding: 20
         },
         bgSuccess: {
-            backgroundColor: theme.mobileBackground,
+            textAlign: 'center',
+            height: '100vh'
         },
-        screen: {
-            backgroundColor: theme.mobileBackground,
+        btnBack: {
+            width: 36,
+            minWidth: 36,
+            color: '#fff',
+            borderRadius: '50%',
+            marginLeft: -10
         },
-        '@global': {
-            body: {
+        appBarTitle: {
+            fontSize: 16
+        },
+        image: {
+            position: 'absolute !important',
+            top: 0,
+            left: 0,
+            maxWidth: '58% !important',
+            height: '100% !important',
+            width: '100%',
+
+            '& .gatsby-image-wrapper': {
+                height: '100% !important',
+
+                '& img': {
+                    objectFit: 'unset !important'
+                }
+            },
+        },
+        modalRoot: {
+            marginLeft: '58%'
+        },
+        buttonProgress: {
+            color: '#fff'
+        },
+        errorMessage: {
+            backgroundColor: '#282828',
+            borderLeft: '3px solid #ac2222'
+        },
+        '@media only screen and (max-width: 992px)': {
+            appBar: {
+                display: 'block'
+            }
+            ,
+            image: {
+                display: 'none'
+            }
+            ,
+            appBarBottomPay: {
+                position: 'fixed',
+                background: '#e5e5e5',
+            },
+            appBarBottom: {
+                position: 'fixed',
+                background: 'transparent',
+            }
+            ,
+            appBarStepConfirm: {
+                position: 'fixed',
                 backgroundColor: theme.mobileBackground,
             }
+            ,
+            imageWrapper: {
+                display: 'none'
+            }
+            ,
+            layout: {
+                '& > div': {
+                    backgroundColor: theme.mobileBackground,
+                }
+            }
+            ,
+            modalRoot: {
+                marginLeft: 0,
+
+                '& div[role="dialog"]': {
+                    backgroundColor: theme.mobileBackground
+                }
+            }
+            ,
+            bgSuccess: {
+                backgroundColor: theme.mobileBackground,
+            }
+            ,
+            screen: {
+                backgroundColor: theme.mobileBackground,
+            }
+            ,
+            '@global': {
+                body: {
+                    backgroundColor: theme.mobileBackground,
+                }
+            }
         }
-    }
-}));
+    }))
+;
 
 function getStepContent({
                             step,
@@ -390,7 +415,7 @@ export default function CheckoutSteps() {
 
         if (activeStep === 1 && (!defaultCard || !defaultCard['label'])) {
             setMessageSeverity('error')
-            setMessage('Você deve selecionar a cidade para qual deseja doar!')
+            setMessage('Você deve informar uma forma de pagamento!')
             return
         }
 
@@ -527,7 +552,7 @@ export default function CheckoutSteps() {
 
                                         <AppBar
                                             color="default"
-                                            className={classes.appBarBottom}>
+                                            className={classes.appBarBottomPay}>
                                             <Container>
                                                 <Grid
                                                     container
@@ -630,7 +655,8 @@ export default function CheckoutSteps() {
                 onClose={handleSnackbarClose}
                 anchorOrigin={{horizontal: 'center', vertical: 'bottom'}}
             >
-                <Alert severity={messageSeverity}>
+                <Alert severity={messageSeverity} className={classes.errorMessage}
+                >
                     {message}
                 </Alert>
             </Snackbar>

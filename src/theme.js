@@ -21,7 +21,6 @@ let theme = createMuiTheme({
     background: '#1D5F31',
     color: '#fff',
     borderRadius: 50,
-    boxShadow: '0 14px 44px rgba(0,0,0,0.20), 0 4px 10px rgba(0,0,0,0.22)',
 
     '&:hover': {
       background: '#188e35'
