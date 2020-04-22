@@ -123,7 +123,7 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
     <Container maxWidth="md">
       <Grid container spacing={3}>
         {
-          settings && !settings.requiredCpf &&
+          settings && settings.requiredCpf &&
           <Grid item xs={12} md={6}>
             {
               cpfCnpj.length <= 14 &&
