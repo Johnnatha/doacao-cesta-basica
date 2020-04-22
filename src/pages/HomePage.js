@@ -34,10 +34,10 @@ const useStyles = makeStyles((theme) => ({
     btnCancelDoacao: {
         display: 'none',
         borderRadius: 50,
-         marginTop: 20
+        marginTop: 20
     },
     '@media only screen and (max-width: 992px)': {
-        btnCancelDoacao:{
+        btnCancelDoacao: {
             display: 'block',
         },
         bannerMobile: {
@@ -94,7 +94,7 @@ export default function HomePage({data, next}) {
 
     const handleFinish = () => {
         if (typeof window !== 'undefined' && window.parent) {
-            window.parent.postMessage(JSON.stringify({ action: 'close'}), '*');
+            window.parent.postMessage(JSON.stringify({action: 'close'}), '*');
         }
     }
 
@@ -106,9 +106,11 @@ export default function HomePage({data, next}) {
                         <BannerMobile className={classes.imageMobile}/>
                     </div>
 
+
                     <span className={classes.labelFinal} style={{textAlign: 'left'}}>
-            Doado <strong>R$ {Util.formatMoney(campanha.vlrDoado)}</strong>
-          </span>
+                            Doado <strong>R$ {Util.formatMoney(campanha.vlrDoado)}</strong>
+                        </span>
+
 
                     <BorderLinearProgress
                         variant="determinate"
@@ -116,10 +118,11 @@ export default function HomePage({data, next}) {
                         value={campanha.percAtingimento}
                     />
 
-                    <span className={classes.labelFinal} style={{textAlign: 'right'}}>
-            Desafio <strong>R$ {Util.formatMoney(campanha.vlrDesafio)}</strong>
-          </span>
-
+                    {campanha.exibeLabelVlrDesafio == 1 && (
+                        <span className={classes.labelFinal} style={{textAlign: 'right'}}>
+                        Desafio <strong>R$ {Util.formatMoney(campanha.vlrDesafio)}</strong>
+                      </span>
+                    )}
                     <span className={classes.labelFinalAccent}>
             Faltam <strong>{campanha.diasEncerramento} dias!</strong>
           </span>
