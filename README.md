@@ -16,3 +16,4 @@ GET https://hmlmsb.queroquero.com.br/msb/doacaoCestaBasica/v1/createSession?clie
 gatsby build
 gatsby develop -H 192.168.25.183 -p 8000
 
+npm run build:path
