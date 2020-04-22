@@ -359,6 +359,8 @@ export default function CheckoutSteps() {
       cardLabel: cardName,
       label: `Final ${cardFinal}`
     })
+
+    setOpen(false)
   }
 
   return (
@@ -448,7 +450,7 @@ export default function CheckoutSteps() {
                   <span className={classes.smalLabel}>Forma de pagamento</span>
                 </Grid>
 
-                <Grid item xs={3} className={classes.payBox}>
+                <Grid item xs={3} md={2} className={classes.payBox}>
                   <img
                     src={cards[defaultCard && defaultCard.cardLabel ? defaultCard.cardLabel.toLowerCase() : 'Default']}
                     alt={`Imagem ${defaultCard && defaultCard.cardLabel ? defaultCard.cardLabel : 'Cartão'}`}
@@ -456,7 +458,7 @@ export default function CheckoutSteps() {
                     />
                 </Grid>
 
-                <Grid item xs={6} className={classes.payMathod}>
+                <Grid item xs={6} md={3} className={classes.payMathod}>
                   {
                     defaultCard && defaultCard.label ?
                       defaultCard.label
