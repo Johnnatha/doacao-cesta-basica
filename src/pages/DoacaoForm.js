@@ -10,14 +10,14 @@ import DialogSelectCity from './selectCity'
 
 const useStyles = makeStyles((theme) => ({
     typography: {
-        marginTop: theme.spacing(3),
-        color: '#9B9A9B',
+        marginTop: theme.spacing(1),
+        color: '#383838',
         fontWeight: 400,
     },
 
     typographyEnd: {
-      marginTop: theme.spacing(8),
-      color: '#9B9A9B',
+      marginTop: theme.spacing(3),
+      color: '#383838',
       fontWeight: 400,
     },
 
@@ -40,8 +40,7 @@ export default function DoacaoForm({ data, sessionId, donationValue, selectedCit
   return (
     <React.Fragment>
       <Typography variant="h6" className={classes.typography}>
-      Qual o valor de<br />
-      sua <strong>doação</strong>?
+      Qual o valor de sua <strong>doação</strong>?
       </Typography>
 
       <Grid container>
