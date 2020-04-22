@@ -21,6 +21,11 @@ const useStyles = makeStyles((theme) => ({
     float: 'right',
     minWidth: 140,
     ...theme.btnAccent
+  },
+  '@media only screen and (min-width: 992px)': {
+    appBarPaymentForm: {
+      position: 'absolute'
+    }
   }
 }))
 

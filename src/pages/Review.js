@@ -66,7 +66,7 @@ export default function Review({ donationValue, selectedCity, setEmail, setAllow
     <React.Fragment>
       <Grid
         container
-        direction="row"
+        direction="column"
         justify="center"
         alignItems="center"
         className={classes.wrapper}
