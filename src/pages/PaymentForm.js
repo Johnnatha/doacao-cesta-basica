@@ -65,17 +65,27 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
     creditCardType.changeOrder('verdecard', 0);
   }, [])
 
-  const handleFocus = (name, value) => {
-    const setFocus = (field) => {
+  const handleFocus = (name) => {
+    if (name === 'cardNumber') {
       setTimeout(() => {
-        field.focus()
+        const field = document.getElementById('cardNumber')
+
+        if (field.value.length === 19) {
+          const focusField = document.getElementById('expDate')
+          focusField.focus()
+        }  
       }, 1);
     }
 
-    if (name === 'cardNumber' && value.length === 16) {
-      const parent = document.getElementById('expDate')
-      const field = parent.querySelector('input')
-      setFocus(field)
+    if (name === 'expDate') {
+      setTimeout(() => {
+        const field = document.getElementById('expDate')
+
+        if (field.value.length === 5 && field.value.indexOf('_') === -1) {
+          const focusField = document.getElementById('cvv')
+          focusField.focus()
+        }
+      }, 1);
     }
   }
 
