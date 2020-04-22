@@ -31,6 +31,7 @@ let theme = createMuiTheme({
       color: '#fff'
     }
   },
+  mobileBackground: '#dce6bc'
 });
 
 export default theme;

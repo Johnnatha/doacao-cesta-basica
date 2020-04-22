@@ -19,7 +19,7 @@ import SuspenseLoader from '../components/SuspenseLoader';
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: 'relative',
-    backgroundColor: '#037649',
+    backgroundColor: theme.palette.primary.main,
     color: '#fff'
   },
   title: {
@@ -29,9 +29,10 @@ const useStyles = makeStyles((theme) => ({
   btnCustom: {
     padding: 10,
     borderRadius: 50,
-    backgroundColor: '#F7F7F7',
+    backgroundColor: 'transparent',
     marginTop: 48,
-    height: 50
+    height: 50,
+    border: '1px solid'
   },
   tapToChoose: {
     textDecoration: 'underline'
@@ -41,6 +42,21 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 20,
     fontWeight: 400,
     marginTop: -3
+  },
+  modalRoot: {
+    marginLeft: '58%'
+  },
+  '@media only screen and (max-width: 992px)': {
+    listCity: {
+      backgroundColor: theme.mobileBackground
+    },
+    modalRoot: {
+      marginLeft: 0,
+
+      '& div[role="dialog"]': {
+        backgroundColor: theme.mobileBackground
+      }
+    },
   }
 }));
 
@@ -91,7 +107,12 @@ export default function DialogSelectCity({ sessionId, clientId, setSelectedCity,
         disableEscapeKeyDown
         fullScreen
         TransitionComponent={Transition}
-        open={open} onClose={handleClose}>
+        open={open}
+        onClose={handleClose}
+        classes={{
+          root: classes.modalRoot,
+        }}
+      >
 
         <AppBar className={classes.appBar}>
           <Toolbar>
@@ -115,6 +136,7 @@ export default function DialogSelectCity({ sessionId, clientId, setSelectedCity,
 let listCity = null
 
 function CidadeList ({ handleClose, sessionId, clientId }) {
+  const classes = useStyles()
   const shouldFetchUrl = listCity ? null : `${config.apiUrl}/listCidades?s=${sessionId}&clientId=${clientId}`
   const { data } = useSWR(shouldFetchUrl, config.fetcher, { suspense: true })
 
@@ -140,7 +162,7 @@ function CidadeList ({ handleClose, sessionId, clientId }) {
   );
 
   return (
-    <List>
+    <List className={classes.listCity}>
       {cidadesListItems}
     </List>
   )

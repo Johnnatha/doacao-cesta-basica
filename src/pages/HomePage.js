@@ -23,19 +23,17 @@ const useStyles = makeStyles((theme) => ({
   containerDonate: {
     display: 'flex',
     flexDirection: 'column',
-    padding: '34px !important'
+    padding: '15% 34px !important'
   },
   bannerMobile: {
     display: 'none',
-  },
-  title: {
-    marginBottom: 36
   },
   '@media only screen and (max-width: 992px)': {
     bannerMobile: {
       display: 'flex',
       justifyContent: 'center',
-      marginTop: 24,
+      marginTop: -24,
+      marginBottom: 24,
 
       '& img': {
         maxWidth: '100%'
@@ -50,11 +48,11 @@ const useStyles = makeStyles((theme) => ({
 const BorderLinearProgress = withStyles({
   root: {
     height: 15,
-    backgroundColor: lighten('#bfbfbf', 0.5),
+    backgroundColor: lighten('#1D5F31', 0.5),
     marginBottom: 16
   },
   bar: {
-    backgroundColor: '#26ab47',
+    backgroundColor: '#1D5F31',
   },
 })(LinearProgress);
 
@@ -65,9 +63,9 @@ export default function HomePage({ data, next }) {
     <React.Fragment>
       <Grid container spacing={3}>
         <Grid item xs={12} md={12} className={classes.containerDonate}>
-          <Typography variant="h5" align="center" className={classes.title}>
-            Campanha
-          </Typography>
+          <div className={classes.bannerMobile}>
+            <img src={BannerMobile} alt="" /> 
+          </div>
 
           <span className={classes.labelFinal} style={{textAlign: 'center'}}>
             Doado <strong>R$ {Util.formatMoney(data.campanha.vlrDoado)}</strong>
@@ -95,10 +93,6 @@ export default function HomePage({ data, next }) {
           >
             Doar
           </Button>
-
-          <div className={classes.bannerMobile}>
-            <img src={BannerMobile} alt="" /> 
-          </div>
         </Grid>
       </Grid>
     </React.Fragment>

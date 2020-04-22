@@ -32,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     position: 'relative',
     backgroundColor: theme.palette.accentColor,
-    color: '#fff'
+    color: '#fff',
+    display: 'none'
   },
   layout: {
     width: 'auto'
@@ -162,13 +163,19 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 16
   },
   image: {
-    top: 64,
     left: 0,
     position: 'absolute',
     maxWidth: '58%',
-    height: 'calc(100% - 64px)',
+    top: 0,
+    height: '100%'
+  },
+  modalRoot: {
+    marginLeft: '58%'
   },
   '@media only screen and (max-width: 992px)' : {
+    appBar: {
+      display: 'block'
+    },
     image: {
       display: 'none'
     },
@@ -183,7 +190,19 @@ const useStyles = makeStyles((theme) => ({
     },
     layout: {
       '& > div': {
-        backgroundColor: '#dce6bc',
+        backgroundColor: theme.mobileBackground,
+      }
+    },
+    modalRoot: {
+      marginLeft: 0,
+      
+      '& div[role="dialog"]': {
+        backgroundColor: theme.mobileBackground
+      }
+    },
+    '@global': {
+      body: {
+        backgroundColor: theme.mobileBackground,
       }
     }
   }
@@ -386,7 +405,7 @@ export default function CheckoutSteps() {
   return (
     <React.Fragment>
 
-      {activeStep != 3 && sourceId !== '1' && (
+      {activeStep != 3 && activeStep != 0 && sourceId !== '1' && (
 
         <AppBar position="absolute" color="default" className={classes.appBar}>
           <Toolbar>
@@ -406,7 +425,12 @@ export default function CheckoutSteps() {
         disableEscapeKeyDown
         fullScreen
         TransitionComponent={Transition}
-        open={open} onClose={handleClose}>
+        open={open}
+        onClose={handleClose}
+        classes={{
+          root: classes.modalRoot,
+        }}
+      >
 
         <AppBar className={classes.payDialog_appBar}>
           <Toolbar>
@@ -556,8 +580,6 @@ export default function CheckoutSteps() {
         </Paper>
       </main>
 
-      
-    
       <Snackbar
         open={message !== ''}
         autoHideDuration={4000}
