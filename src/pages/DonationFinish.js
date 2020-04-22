@@ -22,17 +22,35 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
     color: theme.palette.primary.main
   },
+  titleError: {
+    marginTop: theme.spacing(5),
+    marginBottom: theme.spacing(2),
+    color: '#c32222'
+  },
   check: {
     width: 150
   },
   button: {
-    backgroundColor: '#fff',
     borderRadius: 50,
     color: '#037649',
     width: 120,
     height: 50,
     marginTop: 30,
     fontSize: 18,
+  },
+  buttonError: {
+    borderRadius: 50,
+    color: '#c32222',
+    width: 120,
+    height: 50,
+    marginTop: 30,
+    fontSize: 18,
+    borderColor: '#c32222'
+  },
+  '@media only screen and (max-width: 992px)': {
+    bg: {
+      backgroundColor: theme.mobileBackground
+    }
   }
 }));
 
@@ -55,7 +73,7 @@ export default function DonationFinish({ checkoutResponse }) {
           alignItems="flex-center"
         >
         <Grid item xs={12}  >
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" className={checkoutResponse && checkoutResponse.success ? classes.title : classes.titleError}>
             {checkoutResponse && checkoutResponse.mensagemRetorno ? checkoutResponse.mensagemRetorno : 'Erro'}
           </Typography>
         </Grid>
@@ -71,7 +89,7 @@ export default function DonationFinish({ checkoutResponse }) {
       
         <Grid item xs={12} >
 
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" className={checkoutResponse && checkoutResponse.success ? classes.title : classes.titleError}>
             {
               checkoutResponse && checkoutResponse.success ?
                 'Obrigado!'
@@ -85,7 +103,7 @@ export default function DonationFinish({ checkoutResponse }) {
           <Button
                 variant="outlined"
                 color="primary"
-                className={classes.button}
+                className={checkoutResponse && checkoutResponse.success ? classes.button : classes.buttonError}
                 onClick={handleFinish}
               >
                 Ok!

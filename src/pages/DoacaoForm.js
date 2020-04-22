@@ -53,7 +53,7 @@ export default function DoacaoForm({ data, sessionId, donationValue, selectedCit
             variant="standard"
             value={value}
             currencySymbol="R$"
-            onChange={(event, value)=> setValue(value)}
+            onChange={(event, value)=> handleCurrencyChange(value)}
             id="vlrDoacao"
             name="vlrDoacao"
             fullWidth

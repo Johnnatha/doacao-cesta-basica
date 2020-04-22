@@ -146,7 +146,6 @@ const useStyles = makeStyles((theme) => ({
     padding: 20
   },
   bgSuccess: {
-    backgroundColor: theme.palette.accentColor,
     textAlign: 'center',
     height: '100vh'
   },
@@ -198,6 +197,12 @@ const useStyles = makeStyles((theme) => ({
       '& div[role="dialog"]': {
         backgroundColor: theme.mobileBackground
       }
+    },
+    bgSuccess: {
+      backgroundColor: theme.mobileBackground,
+    },
+    screen: {
+      backgroundColor: theme.mobileBackground,
     },
     '@global': {
       body: {
@@ -263,8 +268,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function CheckoutSteps() {
-  const isSSR = typeof window === "undefined"
-
   // COMPONENT FIELDS
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
@@ -469,7 +472,7 @@ export default function CheckoutSteps() {
       <main className={activeStep !== 3 ? classes.layout : classes.bgSuccess}>
         <Paper className={activeStep !== 3 ? classes.paper : classes.customPaper}>
           <Container maxWidth={false}>
-            <Grid container spacing={6}>
+            <Grid container spacing={6} className={classes.screen}>
               <Grid item xs={12} md={7} className={classes.imageWrapper}>
                 <img src={BannerDesktop} className={classes.image} />
               </Grid>
