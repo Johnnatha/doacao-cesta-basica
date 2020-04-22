@@ -15,21 +15,27 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
   },
   typography: {
-    marginTop: theme.spacing(3),
-    color: '#9B9A9B',
+    marginTop: theme.spacing(1),
+    color: '#383838',
     fontWeight: 400,
     textAlign: 'center',
     fontSize: '1.5em'
   },
+    smallTypography: {
+        marginTop: theme.spacing(1),
+        color: '#383838',
+        fontWeight: 400,
+        textAlign: 'center',
+        fontSize: '1.2em'
+    },
   title: {
     marginTop: theme.spacing(3),
-    color: '#303030',
+    color: '#383838',
     fontWeight: 400,
     textAlign: 'center',
     fontSize: '1.2em'
   },
   imgWrapper: {
-    marginTop: theme.spacing(3)
   },
   spacerTop: {
     marginTop: 25,
@@ -82,7 +88,7 @@ export default function Review({ donationValue, selectedCity, setEmail, setAllow
           <img src={Doacao} />
         </div>
 
-        <Typography variant="h6" className={classes.typography}>
+        <Typography variant="h6" className={classes.smallTypography}>
             Informe seu e-mail e receba<br />
             informações sobre a campanha
         </Typography>
