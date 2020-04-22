@@ -86,7 +86,7 @@ export default function Review({donationValue, selectedCity, setEmail, setAllowU
             >
 
                 <Typography variant="h6"
-                            classNames={classes.typography}>
+                            className={classes.typography}>
                     Doação no valor de<br />
                     <strong>R$ {Util.formatMoney(donationValue)}</strong> de cestas<br />
                     básicas para cidade de<br />
