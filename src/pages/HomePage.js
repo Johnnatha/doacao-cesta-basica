@@ -92,7 +92,7 @@ export default function HomePage({data, next}) {
         campanha = data.campanha
     }
 
-    const handleFinish = () => {
+    const handleCloseApp = () => {
         if (typeof window !== 'undefined' && window.parent) {
             window.parent.postMessage(JSON.stringify({action: 'close'}), '*');
         }
@@ -139,7 +139,7 @@ export default function HomePage({data, next}) {
 
                     <Button
                         className={classes.btnCancelDoacao}
-                        onClick={handleFinish}
+                        onClick={handleCloseApp}
                         fullWidth
                         color="primary"
                         variant="outlined"
