@@ -18,7 +18,7 @@ let theme = createMuiTheme({
     accentColor: '#1D5F31'
   },
   btnAccent: {
-    background: '#f7b900',
+    background: '#1D5F31',
     color: '#fff',
     borderRadius: 50,
     boxShadow: '0 14px 44px rgba(0,0,0,0.20), 0 4px 10px rgba(0,0,0,0.22)',
