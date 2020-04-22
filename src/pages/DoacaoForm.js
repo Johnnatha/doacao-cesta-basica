@@ -2,11 +2,9 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import CurrencyTextField from '@unicef/material-ui-currency-textfield'
-
 import { makeStyles } from '@material-ui/core/styles';
-
 import DialogSelectCity from './selectCity'
+import Util from '../services/Util';
 
 const useStyles = makeStyles((theme) => ({
     typography: {
@@ -35,7 +33,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DoacaoForm({ data, sessionId, donationValue, selectedCity, setDonationValue, setSelectedCity }) {
   const classes = useStyles()
-  const [value, setValue] = React.useState(donationValue || null)
+  const [value, setValue] = React.useState(donationValue || '')
+
+  const handleCurrencyChange = event => {
+    const value = event.target.value
+
+    setValue(value);
+    setDonationValue(value)
+  }
 
   return (
     <React.Fragment>
@@ -44,22 +49,15 @@ export default function DoacaoForm({ data, sessionId, donationValue, selectedCit
       </Typography>
 
       <Grid container>
-        <Grid item xs={12} sm={6}>
-          <CurrencyTextField
+        <Grid item xs={12}>
+          <TextField
             className={classes.textField}
-            variant="standard"
             value={value}
-            decimalCharacter=","
-            digitGroupSeparator="."
-            decimalPlaces={2}
-            decimalPlacesShownOnFocus={2}
-            currencySymbol="R$"
-            onChange={(event, value)=> { setValue(value); setDonationValue(value) }}
-            fullWidth
-            autoComplete='off'
             id="vlrDoacao"
             name="vlrDoacao"
-            minimumValue="0"
+            fullWidth
+            autoComplete='off'
+            onChange={event => handleCurrencyChange(event) }
           />
         </Grid>
 
@@ -68,7 +66,7 @@ export default function DoacaoForm({ data, sessionId, donationValue, selectedCit
             quer destinar
         </Typography>
 
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <DialogSelectCity sessionId={sessionId} clientId={data.clientId} setSelectedCity={setSelectedCity} selectedCity={selectedCity} />
         </Grid>  
       </Grid>      
