@@ -7,7 +7,6 @@ import {TextField, Checkbox, FormControlLabel} from '@material-ui/core';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Util from '../services/Util';
-import classNames from 'classnames';
 
 const useStyles = makeStyles((theme) => ({
     listItem: {
