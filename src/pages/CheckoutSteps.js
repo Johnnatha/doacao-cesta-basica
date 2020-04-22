@@ -402,10 +402,12 @@ export default function CheckoutSteps() {
   }
 
   const handleNewCardClose = (cardName, cardFinal) => {
-    setDefaultCard({
-      cardLabel: cardName,
-      label: `Final ${cardFinal}`
-    })
+    if (cardName && cardFinal) {
+      setDefaultCard({
+        cardLabel: cardName,
+        label: `Final ${cardFinal}`
+      })
+    }
 
     setOpen(false)
   }

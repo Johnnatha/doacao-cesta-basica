@@ -22,6 +22,15 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 140,
     ...theme.btnAccent
   },
+  btnCancel: {
+    height: 44,
+    float: 'right',
+    minWidth: 140,
+    ...theme.btnAccent,
+    color: theme.palette.primary.main,
+    backgroundColor: '#dedede',
+    marginRight: 14
+  },
   '@media only screen and (min-width: 992px)': {
     appBarPaymentForm: {
       position: 'absolute'
@@ -56,6 +65,20 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
     creditCardType.changeOrder('verdecard', 0);
   }, [])
 
+  const handleFocus = (name, value) => {
+    const setFocus = (field) => {
+      setTimeout(() => {
+        field.focus()
+      }, 1);
+    }
+
+    if (name === 'cardNumber' && value.length === 16) {
+      const parent = document.getElementById('expDate')
+      const field = parent.querySelector('input')
+      setFocus(field)
+    }
+  }
+
   const handleClose = () => {
     if (!cardNumber || !cvv || !expDate || (settings && settings.requiredCpf && !cpfCnpj)) {
       return setAlreadyTriedSubmit(true)
@@ -83,7 +106,7 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
           <Grid item xs={12} md={6}>
             {
               cpfCnpj.length <= 14 &&
-              <InputMask mask="999.999.999-999" maskChar="" value={cpfCnpj} onChange={event => { setCpfCnpjLocal(event.target.value); setCpfCnpj(event.target.value) }}>
+              <InputMask mask="999.999.999-999" maskChar="" value={cpfCnpj} onChange={event => { setCpfCnpjLocal(event.target.value); setCpfCnpj(event.target.value); handleFocus('cpfCnpj', event.target.value) }}>
                 {inputProps =>
                   <TextField
                     {...inputProps}
@@ -101,7 +124,7 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
             
             {
               cpfCnpj.length > 14 &&
-              <InputMask mask="99.999.999/9999-99" maskChar="" value={cpfCnpj} onChange={event => { setCpfCnpjLocal(event.target.value); setCpfCnpj(event.target.value) }}>
+              <InputMask mask="99.999.999/9999-99" maskChar="" value={cpfCnpj} onChange={event => { setCpfCnpjLocal(event.target.value); setCpfCnpj(event.target.value); handleFocus('cpfCnpj', event.target.value) }}>
                 {inputProps =>
                   <TextField
                     {...inputProps}
@@ -120,7 +143,7 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
         }
 
         <Grid item xs={12} md={6}>
-          <InputMask mask="9999 9999 9999 9999" maskChar="" value={cardNumber} onChange={event => { setCardNumberLocal(event.target.value); setCardNumber(event.target.value)}}>
+          <InputMask mask="9999 9999 9999 9999" maskChar="" value={cardNumber} onChange={event => { setCardNumberLocal(event.target.value); setCardNumber(event.target.value); handleFocus('cardNumber', event.target.value)}}>
             {inputProps =>
               <TextField
                 {...inputProps}
@@ -135,7 +158,7 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
           </InputMask>
         </Grid>
         <Grid item xs={4} md={4}>
-          <InputMask mask="99/99" maskChar="_" value={expDate} onChange={event => { setExpDateLocal(event.target.value);setExpDate(event.target.value) }}>
+          <InputMask mask="99/99" maskChar="_" value={expDate} onChange={event => { setExpDateLocal(event.target.value);setExpDate(event.target.value); handleFocus('expDate', event.target.value) }}>
             {inputProps =>
               <TextField
                 {...inputProps}
@@ -152,7 +175,7 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
         </Grid>
 
         <Grid item xs={4} md={4}>
-          <InputMask mask="9999" maskChar=" " value={cvv} onChange={event => { setCvvLocal(event.target.value); setCvv(event.target.value) }}>
+          <InputMask mask="9999" maskChar=" " value={cvv} onChange={event => { setCvvLocal(event.target.value); setCvv(event.target.value); handleFocus('cvv', event.target.value) }}>
             {inputProps =>
               <TextField
                 {...inputProps}
@@ -179,11 +202,20 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
             alignItems="flex-start"
           >
             <Grid item xs={12}>
+              
               <Button
                 onClick={handleClose}
                 className={classes.btnContinue}
               >
                 Continuar
+              </Button>
+
+              <Button
+                onClick={onClose}
+                className={classes.btnCancel}
+                variant="outlined"
+              >
+                Cancelar
               </Button>
             </Grid>
           </Grid>
