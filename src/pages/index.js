@@ -4,7 +4,6 @@ import CheckoutSteps from './CheckoutSteps'
 import SuspenseLoader from '../components/SuspenseLoader'
 
 export default function Index() {
-
   return (
     <SWRConfig 
       value={{

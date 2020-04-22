@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Doacao from '../images/doacao.png';
+import Doacao from '../images/logo_campanha.png';
 import { TextField, Checkbox, FormControlLabel } from '@material-ui/core';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
@@ -34,6 +34,14 @@ const useStyles = makeStyles((theme) => ({
   spacerTop: {
     marginTop: 25,
     width: '100%'
+  },
+  wrapper: {
+    paddingBottom: 130
+  },
+  emailField: {
+    '& input': {
+      textAlign: 'center'
+    }
   }
 }));
 
@@ -60,6 +68,7 @@ export default function Review({ donationValue, selectedCity, setEmail, setAllow
         direction="row"
         justify="center"
         alignItems="center"
+        className={classes.wrapper}
       >
 
         <Typography variant="h6" className={classes.typography}>
@@ -81,9 +90,11 @@ export default function Review({ donationValue, selectedCity, setEmail, setAllow
         <div className={classes.spacerTop}>
           <TextField
             value={email}
-            onChange={(event, value) => { setEmailLocal(value); if (setEmail) { setEmail(value) } }}
+            onChange={event => { setEmailLocal(event.target.value); if (setEmail) { setEmail(event.target.value) } }}
             fullWidth
             type="email"
+            placeholder="e-mail"
+            className={classes.emailField}
             required={settings && settings.requiredEmailAutorizacao}
           />
         </div>

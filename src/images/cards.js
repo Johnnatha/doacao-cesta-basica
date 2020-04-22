@@ -8,12 +8,12 @@ import AmericanExpress from '../images/AmericanExpress.png'
 import Default from '../images/default.png'
 
 export default {
-  Verdecard,
-  Visa,
-  Master,
-  Diners,
-  Elo,
-  Hipercard,
-  AmericanExpress,
+  verdecard: Verdecard,
+  visa: Visa,
+  mastercard: Master,
+  'diners-club': Diners,
+  elo: Elo,
+  hipercard: Hipercard,
+  'american-express': AmericanExpress,
   Default
 }

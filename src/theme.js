@@ -17,6 +17,20 @@ let theme = createMuiTheme({
     },
     accentColor: '#037649'
   },
+  btnAccent: {
+    background: '#f7b900',
+    color: '#fff',
+    borderRadius: 50,
+    boxShadow: '0 14px 44px rgba(0,0,0,0.20), 0 4px 10px rgba(0,0,0,0.22)',
+
+    '&:hover': {
+      background: '#188e35'
+    },
+
+    '& svg': {
+      color: '#fff'
+    }
+  },
 });
 
 export default theme;

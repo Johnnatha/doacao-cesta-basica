@@ -236,6 +236,11 @@ export default function CheckoutSteps() {
   const [selectedCity, setSelectedCity] = React.useState(null)
   const [allowUseName, setAllowUseName] = React.useState(false)
   const [email, setEmail] = React.useState('')
+  const [cpfCnpj, setCpfCnpj] = React.useState('')
+  const [cardNumber, setCardNumber] = React.useState('')
+  const [expDate, setExpDate] = React.useState('')
+  const [cvv, setCvv] = React.useState('')
+  const [defaultCard, setDefaultCard] = React.useState({})
 
   let sessionId = null;
   let sourceId = null;
@@ -249,6 +254,12 @@ export default function CheckoutSteps() {
   }
 
   const { data } = useSWR(sessionId ? `${config.apiUrl}/initWebApp?s=${sessionId}&clientId=${clientId}` : null, config.fetcher, { suspense: true })
+
+  React.useEffect(() => {
+    if (data && data.defaultCard) {
+      setDefaultCard(data.defaultCard)
+    }
+  }, [])
 
   const handleCheckout = async (callback) => {
     const requestData = {
@@ -268,6 +279,22 @@ export default function CheckoutSteps() {
 
     if (data && data.defaultCard) {
       requestData.dadosPagamento = Object.assign(requestData.dadosPagamento, { ...data.defaultCard })
+    }
+
+    if (cpfCnpj) {
+      requestData.dadosPagamento.cpf = cpfCnpj
+    }
+
+    if (cardNumber) {
+      requestData.dadosPagamento.numeroCartao = cardNumber
+    }
+
+    if (expDate) {
+      requestData.dadosPagamento.dataValidade = expDate
+    }
+
+    if (cvv) {
+      requestData.dadosPagamento.cvv = cvv
     }
 
     const response = await CheckoutService.finish(sessionId, clientId, requestData)
@@ -327,6 +354,13 @@ export default function CheckoutSteps() {
     setMessageSeverity('')
   }
 
+  const handleNewCardClose = (cardName, cardFinal) => {
+    setDefaultCard({
+      cardLabel: cardName,
+      label: `Final ${cardFinal}`
+    })
+  }
+
   return (
     <React.Fragment>
 
@@ -364,7 +398,14 @@ export default function CheckoutSteps() {
         </AppBar>
 
         <div className={classes.payDialog_content}>
-          <PaymentForm settings={data.settings} />
+          <PaymentForm
+            settings={data.settings}
+            onClose={handleNewCardClose}
+            setCpfCnpj={setCpfCnpj}
+            setCardNumber={setCardNumber}
+            setExpDate={setExpDate}
+            setCvv={setCvv}
+          />
         </div>
       </Dialog>
 
@@ -409,16 +450,16 @@ export default function CheckoutSteps() {
 
                 <Grid item xs={3} className={classes.payBox}>
                   <img
-                    src={cards[data.defaultCard && data.defaultCard.cardLabel ? data.defaultCard.cardLabel : 'Default']}
-                    alt={`Imagem ${data.defaultCard && data.defaultCard.cardLabel ? data.defaultCard.cardLabel : 'Cartão'}`}
-                    className={classes.payCardIcon} />
-
+                    src={cards[defaultCard && defaultCard.cardLabel ? defaultCard.cardLabel.toLowerCase() : 'Default']}
+                    alt={`Imagem ${defaultCard && defaultCard.cardLabel ? defaultCard.cardLabel : 'Cartão'}`}
+                    className={classes.payCardIcon}
+                    />
                 </Grid>
 
                 <Grid item xs={6} className={classes.payMathod}>
                   {
-                    data.defaultCard && data.defaultCard.label ?
-                      data.defaultCard.label
+                    defaultCard && defaultCard.label ?
+                      defaultCard.label
                     :
                       'Informe'
                   }
