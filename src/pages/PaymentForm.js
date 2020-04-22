@@ -61,7 +61,7 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
       return setAlreadyTriedSubmit(true)
     }
 
-    let possibleCards = creditCardType(cardNumber);
+    let possibleCards = creditCardType(cardNumber.split(' ').join(''));
 
     if (possibleCards && possibleCards.length) {
       const firstPossibleCard = possibleCards[0]

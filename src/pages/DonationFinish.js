@@ -3,12 +3,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Check from '../images/check.png';
+import CheckError from '../images/check-error.png';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   bg: {
     paddingTop: 30,
-    backgroundColor: '#037649',
     textAlign: 'center'
   },
   listItem: {
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Confirm() {
+export default function DonationFinish({ checkoutResponse }) {
   const classes = useStyles();
 
   const handleFinish = () => {
@@ -54,26 +54,34 @@ export default function Confirm() {
           justify="space-between"
           alignItems="flex-center"
         >
+        <Grid item xs={12}  >
+          <Typography variant="h6" className={classes.title}>
+            {checkoutResponse.message || 'Erro'}
+          </Typography>
+        </Grid>
 
-          <Grid item xs={12}  >
-            <Typography variant="h6" className={classes.title}>
-              Doação Confirmada
-       </Typography>
-          </Grid>
-
-          <Grid item xs={12} >
-            <img src={Check} className={classes.check} />
-
-          </Grid>
-          <Grid item xs={12} >
+        <Grid item xs={12} >
+          {
+            checkoutResponse.success ?
+              <img src={Check} className={classes.check} />
+            :
+              <img src={CheckError} className={classes.check} />
+          }  
+        </Grid>
+      
+        <Grid item xs={12} >
 
           <Typography variant="h6" className={classes.title}>
-              Obrigado!
-       </Typography>
-          </Grid>
+            {
+              checkoutResponse.success ?
+                'Obrigado!'
+              :
+                'Que pena!'
+            }
+          </Typography>
+        </Grid> 
 
-          <Grid item xs={12} >
-
+        <Grid item xs={12} >
           <Button
                 variant="outlined"
                 color="primary"
@@ -82,9 +90,7 @@ export default function Confirm() {
               >
                 Ok!
             </Button>
-
-            </Grid>
-
+          </Grid>
         </Grid>
       </div>
     </React.Fragment>

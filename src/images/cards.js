@@ -11,6 +11,7 @@ export default {
   verdecard: Verdecard,
   visa: Visa,
   mastercard: Master,
+  maestro: Master,
   'diners-club': Diners,
   elo: Elo,
   hipercard: Hipercard,

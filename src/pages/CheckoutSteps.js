@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import DoacaoForm from './DoacaoForm';
 import PaymentForm from './PaymentForm';
-import Success from './Success';
+import DonationFinish from './DonationFinish';
 import Review from './Review';
 import Grid from '@material-ui/core/Grid';
 import cards from '../images/cards'
@@ -219,7 +219,8 @@ function getStepContent({
   selectedCity,
   settings,
   setEmail,
-  setAllowUseName
+  setAllowUseName,
+  checkoutResponse
 }) {
   switch (step) {
     case 0: {
@@ -250,7 +251,7 @@ function getStepContent({
       }
     case 3:
       {
-        return <Success data={data} sessionId={sessionId} />;
+        return <DonationFinish data={data} sessionId={sessionId} checkoutResponse />;
       }
 
     default:
@@ -269,6 +270,7 @@ export default function CheckoutSteps() {
   const [open, setOpen] = React.useState(false)
   const [message, setMessage] = React.useState('')
   const [messageSeverity, setMessageSeverity] = React.useState('')
+  const [checkoutResponse, setCheckoutResponse] = React.useState({})
 
   // DATA FIELDS
   const [donationValue, setDonationValue] = React.useState(null)
@@ -337,10 +339,10 @@ export default function CheckoutSteps() {
     }
 
     const response = await CheckoutService.finish(sessionId, clientId, requestData)
-    console.log(response)
 
     if (response.success && callback) {
       callback()
+      setCheckoutResponse(response)
     }
   }
 
@@ -475,7 +477,8 @@ export default function CheckoutSteps() {
                   selectedCity,
                   settings: data.settings,
                   setAllowUseName,
-                  setEmail
+                  setEmail,
+                  checkoutResponse
                 })}
               </Grid>
 
