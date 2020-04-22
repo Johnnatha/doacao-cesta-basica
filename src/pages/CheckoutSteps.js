@@ -193,7 +193,19 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: '#282828',
             borderLeft: '3px solid #ac2222'
         },
+        snackbarMobile: {
+            display: 'none'
+        },
+        snackbarDesktop: {
+            display: 'block'
+        },
         '@media only screen and (max-width: 992px)': {
+            snackbarDesktop: {
+                display: 'none'
+            },
+            snackbarMobile: {
+                display: 'block'
+            },
             appBar: {
                 display: 'block'
             }
@@ -650,10 +662,24 @@ export default function CheckoutSteps() {
             </main>
 
             <Snackbar
+                className={classes.snackbarMobile}
                 open={message !== ''}
                 autoHideDuration={4000}
                 onClose={handleSnackbarClose}
                 anchorOrigin={{horizontal: 'center', vertical: 'bottom'}}
+            >
+                <Alert severity={messageSeverity} className={classes.errorMessage}
+                >
+                    {message}
+                </Alert>
+            </Snackbar>
+
+            <Snackbar
+                className={classes.snackbarDesktop}
+                open={message !== ''}
+                autoHideDuration={4000}
+                onClose={handleSnackbarClose}
+                anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             >
                 <Alert severity={messageSeverity} className={classes.errorMessage}
                 >
