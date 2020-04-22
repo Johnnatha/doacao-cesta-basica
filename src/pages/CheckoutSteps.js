@@ -17,7 +17,7 @@ import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import HomePage from './HomePage';
-import { Snackbar, Container } from '@material-ui/core';
+import { Snackbar, Container, CircularProgress } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import CheckoutService from '../services/CheckoutService';
 import BannerDesktop from '../images/banner_desk_840x745_view.png'
@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1.2em',
     height: 44,
     lineHeight: '20px',
+    minWidth: 145
   },
   activeStepBarWrapper: {
     position: 'relative',
@@ -168,6 +169,9 @@ const useStyles = makeStyles((theme) => ({
   },
   modalRoot: {
     marginLeft: '58%'
+  },
+  buttonProgress: {
+    color: '#fff'
   },
   '@media only screen and (max-width: 992px)' : {
     appBar: {
@@ -272,6 +276,7 @@ export default function CheckoutSteps() {
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
   const [open, setOpen] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(false)
   const [message, setMessage] = React.useState('')
   const [messageSeverity, setMessageSeverity] = React.useState('')
   const [checkoutResponse, setCheckoutResponse] = React.useState({})
@@ -313,6 +318,8 @@ export default function CheckoutSteps() {
   }, [])
 
   const handleCheckout = async (callback) => {
+    setIsLoading(true)
+
     const requestData = {
       dadosPagamento: {
           valorPagamento: donationValue
@@ -350,6 +357,8 @@ export default function CheckoutSteps() {
 
     const response = await CheckoutService.finish(sessionId, clientId, requestData)
 
+    setIsLoading(false)
+
     if (callback) {
       callback()
       setCheckoutResponse(response)
@@ -371,7 +380,7 @@ export default function CheckoutSteps() {
       return
     }
 
-    if (activeStep === 2) {
+    if (activeStep === 2 && !isLoading) {
       return handleCheckout(next)
     }
 
@@ -423,7 +432,7 @@ export default function CheckoutSteps() {
 
         <AppBar position="absolute" color="default" className={classes.appBar}>
           <Toolbar>
-            <Button className={classes.btnBack} onClick={handleBack}>
+            <Button className={classes.btnBack} onClick={handleBack} disabled={isLoading}>
               <ArrowBackIcon />
             </Button>
 
@@ -570,6 +579,7 @@ export default function CheckoutSteps() {
                           variant="outlined"
                           color="primary"
                           onClick={handleBack}
+                          disabled={isLoading}
                           className={classes.button}
                       >
                         Cancelar
@@ -581,7 +591,8 @@ export default function CheckoutSteps() {
                         onClick={handleNext}
                         className={classes.button}
                       >
-                        Confirmar
+                        {!isLoading && 'Confirmar' }
+                        {isLoading && <CircularProgress size={24} className={classes.buttonProgress} />}
                   </Button>
 
                     </Grid>

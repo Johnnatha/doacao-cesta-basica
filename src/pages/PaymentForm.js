@@ -205,6 +205,7 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
                 id="cvv"
                 error={alreadyTriedSubmit && cvv === ''}
                 label="CVV"
+                type="tel"
                 minLength={3}
               />
             }

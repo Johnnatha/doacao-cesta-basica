@@ -134,9 +134,10 @@ export default function DialogSelectCity({ sessionId, clientId, setSelectedCity,
 
 let listCity = null
 
-function CidadeList ({ handleClose, sessionId, clientId, isSSR }) {
+function CidadeList ({ handleClose, sessionId, clientId }) {
   const classes = useStyles()
   const [cities, setCities] = React.useState([])
+  const [isLoading, setIsLoading] = React.useState(true)
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -146,6 +147,8 @@ function CidadeList ({ handleClose, sessionId, clientId, isSSR }) {
       if (!listCity) {
         listCity = cities.list
       }
+
+      setIsLoading(false)
     }
 
     fetchData()
@@ -153,7 +156,7 @@ function CidadeList ({ handleClose, sessionId, clientId, isSSR }) {
 
   const list = listCity ? listCity : cities.list
 
-  if (list && list.length === 0) {
+  if (isLoading) {
     return (
       <SuspenseLoader />
     )
