@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import DialogSelectCity from './selectCity'
-import Util from '../services/Util';
+import CurrencyTextField from '@unicef/material-ui-currency-textfield'
 
 const useStyles = makeStyles((theme) => ({
     typography: {
@@ -35,11 +35,9 @@ export default function DoacaoForm({ data, sessionId, donationValue, selectedCit
   const classes = useStyles()
   const [value, setValue] = React.useState(donationValue || '')
 
-  const handleCurrencyChange = event => {
-    const value = event.target.value
-
-    setValue(value);
-    setDonationValue(value)
+  const handleCurrencyChange = actualValue => {
+    setValue(actualValue);
+    setDonationValue(actualValue)
   }
 
   return (
@@ -50,14 +48,21 @@ export default function DoacaoForm({ data, sessionId, donationValue, selectedCit
 
       <Grid container>
         <Grid item xs={12}>
-          <TextField
+          <CurrencyTextField
             className={classes.textField}
+            variant="standard"
             value={value}
+            currencySymbol="R$"
+            onChange={(event, value)=> setValue(value)}
             id="vlrDoacao"
             name="vlrDoacao"
             fullWidth
             autoComplete='off'
-            onChange={event => handleCurrencyChange(event) }
+            decimalPlaces={2}
+            digitGroupSeparator="."
+            minimumValue="1"
+            selectOnFocus={false}
+            decimalCharacter=","
           />
         </Grid>
 

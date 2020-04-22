@@ -181,7 +181,8 @@ const useStyles = makeStyles((theme) => ({
       position: 'fixed'
     },
     appBarStepConfirm: {
-      position: 'fixed'
+      position: 'fixed',
+      backgroundColor: theme.mobileBackground,
     },
     imageWrapper: {
       display: 'none'

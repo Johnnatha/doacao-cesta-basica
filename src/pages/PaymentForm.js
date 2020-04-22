@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     top: 'auto',
     bottom: 0,
     padding: 10,
-    backgroundColor: '#fff',
+    backgroundColor: theme.mobileBackground,
     boxShadow: 'none',
     height: 66,
     display: 'flex',
@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
   },
   '@media only screen and (min-width: 992px)': {
     appBarPaymentForm: {
-      position: 'absolute'
+      position: 'absolute',
+      backgroundColor: '#fff'
     }
   }
 }))

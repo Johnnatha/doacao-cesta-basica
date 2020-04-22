@@ -56,7 +56,7 @@ export default function DonationFinish({ checkoutResponse }) {
         >
         <Grid item xs={12}  >
           <Typography variant="h6" className={classes.title}>
-            {checkoutResponse && checkoutResponse.message ? checkoutResponse.message : 'Erro'}
+            {checkoutResponse && checkoutResponse.mensagemRetorno ? checkoutResponse.mensagemRetorno : 'Erro'}
           </Typography>
         </Grid>
 
