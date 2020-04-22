@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import * as creditCardType from 'credit-card-type'
-import { Button, AppBar, makeStyles } from '@material-ui/core';
+import { Button, AppBar, makeStyles, Container } from '@material-ui/core';
 import InputMask from 'react-input-mask';
 
 const useStyles = makeStyles((theme) => ({
@@ -24,13 +24,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumber, setExpDate, setCvv }) {
+export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumber, setExpDate, setCvv, setMessageSeverity, setMessage }) {
   const classes = useStyles()
   const [cpfCnpj, setCpfCnpjLocal] = React.useState('')
   const [cardNumber, setCardNumberLocal] = React.useState('')
   const [expDate, setExpDateLocal] = React.useState('')
   const [cvv, setCvvLocal] = React.useState('')
-  const [invalidCard, setInvalidCard] = React.useState(false)
+  const [alreadyTriedSubmit, setAlreadyTriedSubmit] = React.useState(false)
 
   React.useEffect(() => {
     creditCardType.addCard({
@@ -44,7 +44,7 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
       lengths: [16],
       code: {
         name: 'CVV',
-        size: 3
+        size: 4
       }
     });
 
@@ -52,23 +52,26 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
   }, [])
 
   const handleClose = () => {
+    if (!cardNumber || !cvv || !expDate || (settings && settings.requiredCpf && !cpfCnpj)) {
+      return setAlreadyTriedSubmit(true)
+    }
+
     let possibleCards = creditCardType(cardNumber);
 
     if (possibleCards && possibleCards.length) {
       const firstPossibleCard = possibleCards[0]
 
-      setInvalidCard(false)
-
       if (onClose) {        
         onClose(firstPossibleCard.type, cardNumber.substring(cardNumber.length - 4, cardNumber.length))
       }
     } else {
-      setInvalidCard(true)
+      setMessageSeverity('error')
+      setMessage('Verifique os dados do cartão!')
     }
   }
 
   return (
-    <React.Fragment>
+    <Container maxWidth="md">
       <Grid container spacing={3}>
         {
           settings && settings.requiredCpf &&
@@ -84,7 +87,7 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
                     label="CPF ou CNPJ"
                     type="tel"
                     fullWidth
-                    error={invalidCard}
+                    error={alreadyTriedSubmit && cpfCnpj === ''}
                     autoFocus
                   />
                 }
@@ -102,7 +105,7 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
                     label="CPF ou CNPJ"
                     type="tel"
                     fullWidth
-                    error={invalidCard}
+                    error={alreadyTriedSubmit && cpfCnpj === ''}
                     autoFocus
                   />
                 }
@@ -112,7 +115,7 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
         }
 
         <Grid item xs={12} md={6}>
-          <InputMask mask="9999 9999 9999 9999 9999" maskChar="" value={cardNumber} onChange={event => { setCardNumberLocal(event.target.value); setCardNumber(event.target.value)}}>
+          <InputMask mask="9999 9999 9999 9999" maskChar="" value={cardNumber} onChange={event => { setCardNumberLocal(event.target.value); setCardNumber(event.target.value)}}>
             {inputProps =>
               <TextField
                 {...inputProps}
@@ -120,6 +123,7 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
                 id="cardNumber"
                 label="Número do Cartão"
                 type="tel"
+                error={alreadyTriedSubmit && cardNumber === ''}
                 fullWidth
               />
             }
@@ -133,7 +137,9 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
                 required
                 id="expDate"
                 label="Validade"
+                minLength={4}
                 value={expDate}
+                error={alreadyTriedSubmit && expDate === ''}
                 type="tel"
               />
             }
@@ -141,13 +147,15 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
         </Grid>
 
         <Grid item xs={4} md={4}>
-          <InputMask mask="999" maskChar=" " value={cvv} onChange={event => { setCvvLocal(event.target.value); setCvv(event.target.value) }}>
+          <InputMask mask="9999" maskChar=" " value={cvv} onChange={event => { setCvvLocal(event.target.value); setCvv(event.target.value) }}>
             {inputProps =>
               <TextField
                 {...inputProps}
                 required
                 id="cvv"
+                error={alreadyTriedSubmit && cvv === ''}
                 label="CVV"
+                minLength={3}
               />
             }
           </InputMask>
@@ -175,6 +183,6 @@ export default function PaymentForm({ settings, onClose, setCpfCnpj, setCardNumb
             </Grid>
           </Grid>
         </AppBar>
-    </React.Fragment>
+    </Container>
   );
 }

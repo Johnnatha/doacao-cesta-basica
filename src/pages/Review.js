@@ -6,6 +6,7 @@ import Doacao from '../images/logo_campanha.png';
 import { TextField, Checkbox, FormControlLabel } from '@material-ui/core';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import Util from '../services/Util';
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -55,12 +56,6 @@ export default function Review({ donationValue, selectedCity, setEmail, setAllow
     setAllowUseName(!allowUseName)
   }
 
-  const formatMoney = (int) => {
-    const numero = int.toFixed(2).split('.');
-    numero[0] = numero[0].split(/(?=(?:...)*$)/).join('.');
-    return numero.join(',');
-  }
-
   return (
     <React.Fragment>
       <Grid
@@ -73,7 +68,7 @@ export default function Review({ donationValue, selectedCity, setEmail, setAllow
 
         <Typography variant="h6" className={classes.typography}>
           Doação no valor de <br />
-          <strong>R$ {formatMoney(donationValue)}</strong> de cestas<br />
+          <strong>R$ {Util.formatMoney(donationValue)}</strong> de cestas<br />
           básicas para cidade de<br />
           <strong>{selectedCity && selectedCity.nome ? selectedCity.nome : ''} - {selectedCity && selectedCity.siglaUf ? selectedCity.siglaUf : ''} </strong>
         </Typography>

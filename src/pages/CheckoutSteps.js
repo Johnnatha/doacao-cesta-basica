@@ -19,9 +19,10 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import config from '../config';
 import useSWR from 'swr';
 import HomePage from './HomePage';
-import { Snackbar } from '@material-ui/core';
+import { Snackbar, Container } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import CheckoutService from '../services/CheckoutService';
+import BannerDesktop from '../images/banner_desk_840x745_view.png'
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -34,14 +35,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff'
   },
   layout: {
-    width: 'auto',
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-      width: 600,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
+    width: 'auto'
   },
   customPaper: {
     boxShadow: 'none',
@@ -50,10 +44,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(3),
     padding: theme.spacing(2),
     boxShadow: 'none',
-    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-      marginBottom: theme.spacing(6),
-      padding: theme.spacing(3),
-    },
   },
   stepper: {
     padding: theme.spacing(3, 0, 5),
@@ -79,11 +69,16 @@ const useStyles = makeStyles((theme) => ({
     height: 44,
     lineHeight: '20px',
   },
+  activeStepBarWrapper: {
+    position: 'relative',
+    marginTop: 75
+  },
   appBarBottom: {
     top: 'auto',
     bottom: 0,
     paddingBottom: 8,
-    paddingTop: 4
+    paddingTop: 4,
+    position: 'absolute'
   },
   appBarStepConfirm: {
     top: 'auto',
@@ -93,7 +88,8 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'none',
     height: 66,
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    position: 'absolute'
   },
   payCardIcon: {
     width: 50,
@@ -103,10 +99,8 @@ const useStyles = makeStyles((theme) => ({
   payBox: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
-  },
-  payBoxFirst: {
-    padding: '0 8px'
+    justifyContent: 'center',
+    marginLeft: '-8px',
   },
   payMathod: {
     display: 'flex',
@@ -127,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
   payButtonWrapper: {
     display: 'flex',
     alignItems: 'flex-end',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     height: 52,
   },
   smalLabel: {
@@ -166,6 +160,32 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarTitle: {
     fontSize: 16
+  },
+  image: {
+    top: 64,
+    left: 0,
+    position: 'absolute',
+    maxWidth: '58%',
+    height: 'calc(100% - 64px)',
+  },
+  '@media only screen and (max-width: 992px)' : {
+    image: {
+      display: 'none'
+    },
+    appBarBottom: {
+      position: 'fixed'
+    },
+    appBarStepConfirm: {
+      position: 'fixed'
+    },
+    imageWrapper: {
+      display: 'none'
+    },
+    layout: {
+      '& > div': {
+        backgroundColor: '#dce6bc',
+      }
+    }
   }
 }));
 
@@ -413,115 +433,130 @@ export default function CheckoutSteps() {
 
       <main className={activeStep !== 3 ? classes.layout : classes.bgSuccess}>
         <Paper className={activeStep !== 3 ? classes.paper : classes.customPaper}>
-          <React.Fragment>
-            {getStepContent({
-              step: activeStep,
-              data,
-              sessionId,
-              handleNext,
-              setDonationValue,
-              setSelectedCity,
-              donationValue,
-              selectedCity,
-              settings: data.settings,
-              setAllowUseName,
-              setEmail
-            })}
-          </React.Fragment>
+          <Container maxWidth={false}>
+            <Grid container spacing={6}>
+              <Grid item xs={12} md={7} className={classes.imageWrapper}>
+                <img src={BannerDesktop} className={classes.image} />
+              </Grid>
+
+              <Grid item xs={12} md={5}>
+                {getStepContent({
+                  step: activeStep,
+                  data,
+                  sessionId,
+                  handleNext,
+                  setDonationValue,
+                  setSelectedCity,
+                  donationValue,
+                  selectedCity,
+                  settings: data.settings,
+                  setAllowUseName,
+                  setEmail
+                })}
+              </Grid>
+
+              <Grid item xs={false} md={7}></Grid>
+
+              <Grid item xs={12} md={5}>
+              <div className={classes.activeStepBarWrapper}>
+                  {activeStep === 1 && (
+
+                  <AppBar
+                    color="default"
+                    className={classes.appBarBottom} >
+                    <Container>
+                      <Grid
+                        container
+                        direction="row"
+                        justify="space-between"
+                        alignItems="flex-start"
+                      >
+                        <Grid item xs={8} onClick={handleClickOpen}>
+                          <Grid container>
+                            <Grid item xs={12} className={classes.payBoxFirst}>
+                              <span className={classes.smalLabel}>Forma de pagamento</span>
+                            </Grid>
+
+                            <Grid item xs={3} md={2} className={classes.payBox}>
+                              <img
+                                src={cards[defaultCard && defaultCard.cardLabel ? defaultCard.cardLabel.toLowerCase() : 'Default']}
+                                alt={`Imagem ${defaultCard && defaultCard.cardLabel ? defaultCard.cardLabel : 'Cartão'}`}
+                                className={classes.payCardIcon}
+                                />
+                            </Grid>
+
+                            <Grid item xs={6} md={4} className={classes.payMathod}>
+                              {
+                                defaultCard && defaultCard.label ?
+                                  defaultCard.label
+                                :
+                                  'Informe'
+                              }
+                            </Grid>
+                          </Grid>
+                        </Grid>
+
+                        <Grid item xs={4} className={classes.payButtonWrapper}>
+                          <Button
+                              variant="contained"
+                              color="primary"
+                              onClick={handleNext}
+                              className={classes.button}
+                            >
+                              Doar
+                          </Button>
+                        </Grid>
+
+                      </Grid>
+                    </Container>
+
+                  </AppBar>
+
+                  )}
+
+                  {activeStep === 2 && (
+
+                  <AppBar
+                    color="default"
+                    className={classes.appBarStepConfirm} >
+
+                    <Grid
+                      container
+                      direction="row"
+                      justify="center"
+                      alignItems="flex-start"
+                    >
+
+                      <Button
+                          variant="outlined"
+                          color="primary"
+                          onClick={handleBack}
+                          className={classes.button}
+                      >
+                        Cancelar
+                      </Button>
+
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleNext}
+                        className={classes.button}
+                      >
+                        Confirmar
+                  </Button>
+
+                    </Grid>
+                  </AppBar>
+
+                  )}
+                </div>
+              </Grid>
+            </Grid>
+          </Container>
         </Paper>
       </main>
 
-      {activeStep === 1 && (
-
-        <AppBar
-          position="fixed"
-          color="default"
-          className={classes.appBarBottom} >
-
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-            alignItems="flex-start"
-          >
-            <Grid item xs={8} onClick={handleClickOpen}>
-              <Grid container>
-                <Grid item xs={12} className={classes.payBoxFirst}>
-                  <span className={classes.smalLabel}>Forma de pagamento</span>
-                </Grid>
-
-                <Grid item xs={3} md={2} className={classes.payBox}>
-                  <img
-                    src={cards[defaultCard && defaultCard.cardLabel ? defaultCard.cardLabel.toLowerCase() : 'Default']}
-                    alt={`Imagem ${defaultCard && defaultCard.cardLabel ? defaultCard.cardLabel : 'Cartão'}`}
-                    className={classes.payCardIcon}
-                    />
-                </Grid>
-
-                <Grid item xs={6} md={3} className={classes.payMathod}>
-                  {
-                    defaultCard && defaultCard.label ?
-                      defaultCard.label
-                    :
-                      'Informe'
-                  }
-                </Grid>
-              </Grid>
-            </Grid>
-
-            <Grid item xs={4} className={classes.payButtonWrapper}>
-              <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNext}
-                  className={classes.button}
-                >
-                  Doar
-              </Button>
-            </Grid>
-
-          </Grid>
-
-        </AppBar>
-
-      )}
-
-      {activeStep === 2 && (
-
-        <AppBar
-          position="fixed"
-          color="default"
-          className={classes.appBarStepConfirm} >
-
-          <Grid
-            container
-            direction="row"
-            justify="center"
-            alignItems="flex-start"
-          >
-
-            <Button
-                variant="outlined"
-                color="primary"
-                onClick={handleBack}
-                className={classes.button}
-            >
-              Cancelar
-            </Button>
-
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleNext}
-              className={classes.button}
-            >
-              Confirmar
-      </Button>
-
-          </Grid>
-        </AppBar>
-
-      )}
+      
     
       <Snackbar
         open={message !== ''}
