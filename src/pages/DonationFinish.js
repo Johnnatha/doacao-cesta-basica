@@ -111,7 +111,7 @@ export default function DonationFinish({ checkoutResponse }) {
                 className={checkoutResponse && checkoutResponse.success ? classes.button : classes.buttonError}
                 onClick={handleFinish}
               >
-                Ok!
+                Ok
             </Button>
           </Grid>
         </Grid>
