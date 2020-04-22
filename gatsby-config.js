@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: '/doacaoCestaBasica',
   plugins: [
     'gatsby-plugin-top-layout',
     {
