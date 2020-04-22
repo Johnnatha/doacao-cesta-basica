@@ -2,8 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Check from '../images/check.png';
-import CheckError from '../images/check-error.png';
+import Check from '../components/Image/check';
+import CheckError from '../components/Image/check-error';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
     color: '#c32222'
   },
   check: {
-    width: 150
+    width: 150,
+    margin: '0 auto'
   },
   button: {
     borderRadius: 50,
@@ -81,9 +82,13 @@ export default function DonationFinish({ checkoutResponse }) {
         <Grid item xs={12} >
           {
             checkoutResponse && checkoutResponse.success ?
-              <img src={Check} className={classes.check} />
+              <div className={classes.check}>
+                <Check />
+              </div>
             :
-              <img src={CheckError} className={classes.check} />
+              <div className={classes.check}>
+                <CheckError />
+              </div>
           }  
         </Grid>
       

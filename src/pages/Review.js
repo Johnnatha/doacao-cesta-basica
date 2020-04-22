@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Doacao from '../images/logo_campanha.png';
+import LogoCampanha from '../components/Image/logo-campanha';
 import { TextField, Checkbox, FormControlLabel } from '@material-ui/core';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
@@ -80,7 +80,7 @@ export default function Review({ donationValue, selectedCity, setEmail, setAllow
         </Typography>
 
         <div className={classes.imgWrapper}>
-          <img src={Doacao} />
+          <LogoCampanha />
         </div>
 
         <Typography variant="h6" className={classes.smallTypography}>
