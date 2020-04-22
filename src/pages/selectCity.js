@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -12,9 +12,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import useSWR from 'swr'
-import config from '../config'
 import SuspenseLoader from '../components/SuspenseLoader';
+import CheckoutService from '../services/CheckoutService';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -127,13 +126,7 @@ export default function DialogSelectCity({ sessionId, clientId, setSelectedCity,
           </Toolbar>
         </AppBar>
 
-        {
-          !isSSR && (
-          <Suspense fallback={<SuspenseLoader />}>
-            <CidadeList handleClose={handleClose} sessionId={sessionId} clientId={clientId} isSSR={isSSR} />
-          </Suspense>
-          )
-        }
+        <CidadeList handleClose={handleClose} sessionId={sessionId} clientId={clientId} />
       </Dialog>
     </div>
   );
@@ -143,14 +136,28 @@ let listCity = null
 
 function CidadeList ({ handleClose, sessionId, clientId, isSSR }) {
   const classes = useStyles()
-  const shouldFetchUrl = listCity ? null : `${config.apiUrl}/listCidades?s=${sessionId}&clientId=${clientId}`
-  const { data } = useSWR(shouldFetchUrl, config.fetcher, { suspense: !isSSR })
+  const [cities, setCities] = React.useState([])
 
-  if (!listCity) {
-    listCity = data.list
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const cities = await CheckoutService.listCities(sessionId, clientId)
+      setCities(cities)
+
+      if (!listCity) {
+        listCity = cities.list
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  const list = listCity ? listCity : cities.list
+
+  if (list && list.length === 0) {
+    return (
+      <SuspenseLoader />
+    )
   }
-
-  const list = listCity ? listCity : data.list
 
   const cidadesListItems = (list ? list : []).map((cid, index) =>
     <React.Fragment key={index}>

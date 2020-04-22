@@ -16,8 +16,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import config from '../config';
-import useSWR from 'swr';
 import HomePage from './HomePage';
 import { Snackbar, Container } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -284,6 +282,7 @@ export default function CheckoutSteps() {
   const [expDate, setExpDate] = React.useState('')
   const [cvv, setCvv] = React.useState('')
   const [defaultCard, setDefaultCard] = React.useState({})
+  const [data, setData] = React.useState({ campanha: {percAtingimento: 0} })
 
   let sessionId = null;
   let sourceId = null;
@@ -296,12 +295,17 @@ export default function CheckoutSteps() {
     sourceId = urlParams.get('src');
   }
 
-  const { data } = useSWR(sessionId ? `${config.apiUrl}/initWebApp?s=${sessionId}&clientId=${clientId}` : null, config.fetcher, { suspense: !isSSR })
-
   React.useEffect(() => {
-    if (data && data.defaultCard) {
-      setDefaultCard(data.defaultCard)
+    const fetchData = async () => {
+      const responseData = await CheckoutService.initWebApp(sessionId, clientId)
+      setData(responseData)
+
+      if (data && data.defaultCard) {
+        setDefaultCard(data.defaultCard)
+      }
     }
+
+    fetchData()
   }, [])
 
   const handleCheckout = async (callback) => {

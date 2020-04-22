@@ -20,5 +20,43 @@ export default {
         });
       })
     })
+  },
+  initWebApp: (sessionId, clientId) => {
+    return new Promise(resolve => {
+      fetch(`${config.apiUrl}/initWebApp?s=${sessionId}&clientId=${clientId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then((response) => {
+        response.json().then((data) => {
+          resolve(data)
+        });
+      })
+      .catch((response) => {
+        response.json().then((data) => {
+          resolve(data)
+        });
+      })
+    })
+  },
+  listCities: (sessionId, clientId) => {
+    return new Promise(resolve => {
+      fetch(`${config.apiUrl}/listCidades?s=${sessionId}&clientId=${clientId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then((response) => {
+        response.json().then((data) => {
+          resolve(data)
+        });
+      })
+      .catch((response) => {
+        response.json().then((data) => {
+          resolve(data)
+        });
+      })
+    })
   }
 }
