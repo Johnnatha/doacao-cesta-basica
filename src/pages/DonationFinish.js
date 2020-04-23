@@ -62,6 +62,12 @@ export default function DonationFinish({ checkoutResponse }) {
     if (typeof window !== 'undefined' && window.parent) {
       window.parent.postMessage(JSON.stringify({ action: 'close'}), '*'); 
     }
+
+    if (typeof window !== 'undefined' && window.location) {
+      if (window.innerWidth >= 1024) {
+        window.location.reload()
+      }
+    }
   }
 
   return (
