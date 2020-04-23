@@ -6,9 +6,9 @@ const BannerDesktop = () => (
   <StaticQuery
     query={graphql`
       query {
-        placeholderImage: file(relativePath: { eq: "banner_desk_view.png" }) {
+        placeholderImage: file(relativePath: { eq: "banner_desk.png" }) {
           childImageSharp {
-            fluid(maxWidth: 975, quality: 100) {
+            fluid(maxWidth: 600, quality: 100) {
               ...GatsbyImageSharpFluid_withWebp
             }
           }
