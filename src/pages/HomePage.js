@@ -120,7 +120,6 @@ const useStyles = makeStyles((theme) => ({
             }
         },
         btnCancelDoacao: {
-            display: 'block',
         },
         bannerMobile: {
             display: 'flex',
