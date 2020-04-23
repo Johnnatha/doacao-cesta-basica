@@ -4,7 +4,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 let theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#1D5F31',
+      main: '#1e4637',
     },
     secondary: {
       main: '#19857b',
@@ -15,16 +15,12 @@ let theme = createMuiTheme({
     background: {
       default: '#fff',
     },
-    accentColor: '#1D5F31'
+    accentColor: '#1e4637'
   },
   btnAccent: {
-    background: '#1D5F31',
+    background: '#1e4637',
     color: '#fff',
     borderRadius: 50,
-
-    '&:hover': {
-      background: '#188e35'
-    },
 
     '& svg': {
       color: '#fff'
