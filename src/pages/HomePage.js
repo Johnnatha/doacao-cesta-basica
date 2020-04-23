@@ -253,7 +253,7 @@ export default function HomePage({data, next}) {
                             />
 
                             <span className={classes.progressValue} style={{ color: '#fff' }}>
-                                {Util.formatMoney(campanha.vlrDoadoQq)}
+                                {'R$ ' + Util.formatMoney(campanha.vlrDoadoQq)}
                             </span>
                         </Grid>
 
@@ -269,7 +269,7 @@ export default function HomePage({data, next}) {
                             />
 
                             <span className={classes.progressValue}>
-                                {Util.formatMoney(campanha.vlrDoadoAdvt)}
+                                {'R$ ' + Util.formatMoney(campanha.vlrDoadoAdvt)}
                             </span>
                         </Grid>
 
@@ -285,7 +285,7 @@ export default function HomePage({data, next}) {
                             />
 
                             <span className={classes.progressValue}>
-                                {Util.formatMoney(campanha.vlrDoadoPublico)}
+                                {'R$ ' + Util.formatMoney(campanha.vlrDoadoPublico)}
                             </span>
                         </Grid>
                     </Grid>
