@@ -525,6 +525,8 @@ export default function CheckoutSteps() {
                         setCardNumber={setCardNumber}
                         setExpDate={setExpDate}
                         setCvv={setCvv}
+                        setMessage={setMessage}
+                        setMessageSeverity={setMessageSeverity}
                     />
                 </div>
             </Dialog>
