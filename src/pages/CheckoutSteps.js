@@ -275,6 +275,8 @@ function getStepContent({
                             settings,
                             setEmail,
                             setAllowUseName,
+                            setAllowTermos,
+                            setAllowTermosFull,
                             checkoutResponse
                         }) {
     switch (step) {
@@ -300,6 +302,8 @@ function getStepContent({
                 selectedCity={selectedCity}
                 setEmail={setEmail}
                 setAllowUseName={setAllowUseName}
+                setAllowTermos={setAllowTermos}
+                setAllowTermosFull={setAllowTermosFull}
                 settings={settings}
             />;
         }
@@ -330,6 +334,9 @@ export default function CheckoutSteps() {
     const [donationValue, setDonationValue] = React.useState(null)
     const [selectedCity, setSelectedCity] = React.useState(null)
     const [allowUseName, setAllowUseName] = React.useState(false)
+    const [allowTermos, setAllowTermos] = React.useState(false)
+    const [allowTermosFull, setAllowTermosFull] = React.useState(false)
+
     const [email, setEmail] = React.useState('')
     const [cpfCnpj, setCpfCnpj] = React.useState('')
     const [cardNumber, setCardNumber] = React.useState('')
@@ -371,6 +378,8 @@ export default function CheckoutSteps() {
             },
             dadosAutorizacao: {
                 aceitaDivulgarNome: allowUseName,
+                aceitaTermos: allowTermos,
+                aceitaTermosFull: allowTermosFull,
                 email: email
             },
             dadosDoacao: {
@@ -554,6 +563,8 @@ export default function CheckoutSteps() {
                                     settings: data && data.settings ? data.settings : {},
                                     setAllowUseName,
                                     setEmail,
+                                    setAllowTermos,
+                                    setAllowTermosFull,
                                     checkoutResponse
                                 })}
                             </Grid>
@@ -645,6 +656,7 @@ export default function CheckoutSteps() {
                                                     variant="contained"
                                                     color="primary"
                                                     onClick={handleNext}
+                                                    disabled={(!allowTermosFull || !allowTermos)}
                                                     className={classes.button}
                                                 >
                                                     {!isLoading && 'Confirmar' }
