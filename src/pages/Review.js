@@ -190,7 +190,7 @@ export default function Review({donationValue,
                 <Grid item xs={11}>
                     <Typography variant="h6" className={classes.termosText}>
                         <strong>
-                        Informe seu e-mail e receba e informações sobre a campanha.
+                        Informe seu e-mail e receba informações sobre a campanha.
                         </strong>
                     </Typography>
                 </Grid>
