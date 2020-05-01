@@ -291,36 +291,39 @@ export default function HomePage({data, next}) {
                         Total <strong>R$ {Util.formatMoney(campanha.vlrDoado)}</strong>
                     </span>
 
-                    {campanha.diasEncerramento == 1 && (
-                        <span className={classes.labelFinalAccent}>
-                        Faltam <strong>{campanha.diasEncerramento} dia!</strong>
-                    </span>
-                    )}
-                    {campanha.diasEncerramento > 1 && (
-                        <span className={classes.labelFinalAccent}>
-                        Faltam <strong>{campanha.diasEncerramento} dias!</strong>
-                    </span>
-                    )}
+                    {campanha.diasEncerramento > 0 && (
+                        <React.Fragment>
+                            {campanha.diasEncerramento == 1 && (
+                                <span className={classes.labelFinalAccent}>
+                                    Faltam <strong>{campanha.diasEncerramento} dia!</strong>
+                                </span>
+                            )}
+                            {campanha.diasEncerramento > 1 && (
+                                <span className={classes.labelFinalAccent}>
+                                     Faltam <strong>{campanha.diasEncerramento} dias!</strong>
+                                </span>
+                            )}
+                            <Button
+                                className={classes.btnDoar}
+                                onClick={next}
+                                fullWidth
+                                color="primary"
+                                variant="contained"
+                            >
+                                Doar
+                            </Button>
 
-                    <Button
-                        className={classes.btnDoar}
-                        onClick={next}
-                        fullWidth
-                        color="primary"
-                        variant="contained"
-                    >
-                        Doar
-                    </Button>
-
-                    <Button
-                        className={classes.btnCancelDoacao}
-                        onClick={handleCloseApp}
-                        fullWidth
-                        color="primary"
-                        variant="outlined"
-                    >
-                        Cancelar
-                    </Button>
+                            <Button
+                                className={classes.btnCancelDoacao}
+                                onClick={handleCloseApp}
+                                fullWidth
+                                color="primary"
+                                variant="outlined"
+                            >
+                                Cancelar
+                            </Button>
+                        </React.Fragment>
+                    )}
                 </Grid>
             </Grid>
         </React.Fragment>
