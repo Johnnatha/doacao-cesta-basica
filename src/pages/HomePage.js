@@ -119,8 +119,7 @@ const useStyles = makeStyles((theme) => ({
                 width: '60% !important'
             }
         },
-        btnCancelDoacao: {
-        },
+        btnCancelDoacao: {},
         bannerMobile: {
             display: 'flex',
             justifyContent: 'center',
@@ -160,16 +159,14 @@ const defaultProgress = {
         bottom: 0,
         width: '100%'
     },
-    bar: {
-        
-    }
+    bar: {}
 }
 
 const ProgressBarQQ = withStyles(theme => ({
     root: {
         ...defaultProgress.root,
         backgroundColor: lighten('#538136', 0.5),
-        
+
     },
     bar: {
         ...defaultProgress.bar,
@@ -181,7 +178,7 @@ const ProgressBarAdvent = withStyles(theme => ({
     root: {
         ...defaultProgress.root,
         backgroundColor: lighten('#cbb667', 0.5),
-        
+
     },
     bar: {
         ...defaultProgress.bar,
@@ -198,7 +195,7 @@ const ProgressBarPublic = withStyles(theme => ({
     root: {
         ...defaultProgress.root,
         backgroundColor: lighten('#618fba', 0.5),
-        
+
     },
     bar: {
         ...defaultProgress.bar,
@@ -252,7 +249,7 @@ export default function HomePage({data, next}) {
                                 value={campanha.percAtingimento}
                             />
 
-                            <span className={classes.progressValue} style={{ color: '#fff' }}>
+                            <span className={classes.progressValue} style={{color: '#fff'}}>
                                 {'R$ ' + Util.formatMoney(campanha.vlrDoadoQq)}
                             </span>
                         </Grid>
@@ -294,9 +291,16 @@ export default function HomePage({data, next}) {
                         Total <strong>R$ {Util.formatMoney(campanha.vlrDoado)}</strong>
                     </span>
 
-                    <span className={classes.labelFinalAccent}>
+                    {campanha.diasEncerramento == 1 && (
+                        <span className={classes.labelFinalAccent}>
+                        Faltam <strong>{campanha.diasEncerramento} dia!</strong>
+                    </span>
+                    )}
+                    {campanha.diasEncerramento > 1 && (
+                        <span className={classes.labelFinalAccent}>
                         Faltam <strong>{campanha.diasEncerramento} dias!</strong>
                     </span>
+                    )}
 
                     <Button
                         className={classes.btnDoar}
