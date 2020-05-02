@@ -303,7 +303,7 @@ export default function HomePage({data, next}) {
                         <React.Fragment>
                             {campanha.diasEncerramento == 1 && (
                                 <span className={classes.labelFinalAccent}>
-                                    Faltam <strong>{campanha.diasEncerramento} dia!</strong>
+                                    Falta <strong>{campanha.diasEncerramento} dia!</strong>
                                 </span>
                             )}
                             {campanha.diasEncerramento > 1 && (
