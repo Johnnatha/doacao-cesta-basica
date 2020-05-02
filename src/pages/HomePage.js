@@ -3,6 +3,7 @@ import {Button, Grid, makeStyles, lighten, LinearProgress} from '@material-ui/co
 import Util from '../services/Util'
 import {withStyles} from '@material-ui/styles';
 import BannerMobile from '../components/Image/banner-home-mobile'
+import BannerAgradecimentoMobile from '../components/Image/banner-home-agradecimento-mobile'
 import Advent from '../components/Image/advent'
 import QueroQueroVerdecard from '../components/Image/qq-vc'
 import Pessoas from '../components/Image/pessoas'
@@ -123,9 +124,11 @@ const useStyles = makeStyles((theme) => ({
         bannerMobile: {
             display: 'flex',
             justifyContent: 'center',
-            marginTop: -24,
+            marginTop: -26,
             marginBottom: 24,
-            height: 360,
+
+            marginLeft: -26,
+            width: '116%',
 
             '& img': {
                 maxWidth: '100%'
@@ -228,7 +231,12 @@ export default function HomePage({data, next}) {
             <Grid container spacing={3}>
                 <Grid item xs={12} md={12} className={classes.containerDonate}>
                     <div className={classes.bannerMobile}>
-                        <BannerMobile className={classes.imageMobile}/>
+                        {campanha.diasEncerramento > 0 && (
+                            <BannerMobile className={classes.imageMobile}/>
+                        )}
+                        {campanha.diasEncerramento <= 0 && (
+                            <BannerAgradecimentoMobile className={classes.imageMobile}/>
+                        )}
                     </div>
 
                     {campanha.exibeLabelVlrDesafio == 1 && (
