@@ -21,6 +21,7 @@ import {Snackbar, Container, CircularProgress} from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import CheckoutService from '../services/CheckoutService';
 import BannerDesktop from '../components/Image/banner-home-desktop'
+import BannerDesktopAgradecimento from '../components/Image/banner-home-agradecimento-desktop'
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -36,8 +37,17 @@ const useStyles = makeStyles((theme) => ({
         layout: {
             width: 'auto'
         },
+        layoutAgradecimento: {
+            width: 'auto',
+            '& > div': {
+                backgroundColor: theme.mobileBackground,
+            }
+        },
         customPaper: {
             boxShadow: 'none',
+        },
+        imageDeskAgradecimento: {
+            maxHeight: 600
         },
         paper: {
             marginBottom: theme.spacing(3),
@@ -540,13 +550,20 @@ export default function CheckoutSteps() {
                 </div>
             </Dialog>
 
-            <main className={activeStep !== 3 ? classes.layout : classes.bgSuccess}>
+            <main
+                className={activeStep !== 3 ? (data.campanha.diasEncerramento > 0 ? classes.layout : classes.layoutAgradecimento) : classes.bgSuccess}>
                 <Paper className={activeStep !== 3 ? classes.paper : classes.customPaper}>
                     <Container maxWidth={false}>
                         <Grid container spacing={6} className={classes.screen}>
                             <Grid item xs={12} md={7} className={classes.imageWrapper}>
                                 <div className={classes.image}>
-                                    <BannerDesktop />
+                                    {data.campanha.diasEncerramento > 0 && (
+                                        <BannerDesktop />
+
+                                    )}
+                                    {data.campanha.diasEncerramento <= 0 && (
+                                        <BannerDesktopAgradecimento className={classes.imageDeskAgradecimento}/>
+                                    )}
                                 </div>
                             </Grid>
 

@@ -4,6 +4,7 @@ import Util from '../services/Util'
 import {withStyles} from '@material-ui/styles';
 import BannerMobile from '../components/Image/banner-home-mobile'
 import BannerAgradecimentoMobile from '../components/Image/banner-home-agradecimento-mobile'
+import BannerAgradecimentoDeskRight from '../components/Image/banner-home-agradecimento-desk-right'
 import Advent from '../components/Image/advent'
 import QueroQueroVerdecard from '../components/Image/qq-vc'
 import Pessoas from '../components/Image/pessoas'
@@ -34,6 +35,16 @@ const useStyles = makeStyles((theme) => ({
     },
     bannerMobile: {
         display: 'none',
+    },
+    bannerDeskAgradecimento: {
+        marginTop: -50,
+        display: 'block',
+        justifyContent: 'center',
+    },
+    imageDeskAgradecimento: {
+        maxWidth: '58% !important',
+        height: '100% !important',
+        width: '100%',
     },
     btnCancelDoacao: {
         display: 'none',
@@ -121,6 +132,11 @@ const useStyles = makeStyles((theme) => ({
             }
         },
         btnCancelDoacao: {},
+
+        bannerDeskAgradecimento: {
+            display: 'none'
+        },
+
         bannerMobile: {
             display: 'flex',
             justifyContent: 'center',
@@ -236,6 +252,12 @@ export default function HomePage({data, next}) {
                         )}
                         {campanha.diasEncerramento <= 0 && (
                             <BannerAgradecimentoMobile className={classes.imageMobile}/>
+                        )}
+                    </div>
+
+                    <div className={classes.bannerDeskAgradecimento}>
+                        {campanha.diasEncerramento <= 0 && (
+                            <BannerAgradecimentoDeskRight className={classes.imageDeskAgradecimento}/>
                         )}
                     </div>
 
